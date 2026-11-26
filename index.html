@@ -15,14 +15,17 @@ button:hover:not(:disabled){opacity:.88}
 button:disabled{opacity:.35;cursor:not-allowed}button.x{background:#fff;color:var(--no);border-color:var(--no)}button.x:hover{background:var(--no);color:#fff}button.w{background:var(--wa);border-color:var(--wa)}
 button.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}button.alt:hover{background:var(--fg);color:#fff}
 textarea{resize:vertical;width:100%}:focus-visible{outline:1px solid var(--fg);outline-offset:2px}
+.chk{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--bd);background:var(--sf);cursor:pointer;font-size:13px;line-height:1.45;user-select:none}
+.chk input[type="checkbox"]{width:18px;height:18px;min-height:18px;margin:2px 0 0;padding:0;accent-color:var(--fg);flex-shrink:0;cursor:pointer}
+.chk span b{font-weight:600}
 .promo{background:var(--sf);color:var(--fg);border-bottom:1px solid var(--bd);text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;font-weight:500}
-header{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:25px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-nav{display:flex;align-items:center;gap:4px}
-.ib{background:none;color:var(--fg);border:0;min-width:40px;min-height:40px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;position:relative}
-.ib::after{content:'';position:absolute;left:10px;right:10px;bottom:8px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
+header{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 16px 0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:25px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+nav{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.ib,button.ib{background:none;color:var(--fg);border:0;min-width:40px;min-height:44px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-family:inherit;font-weight:500;font-size:12px;line-height:1;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;cursor:pointer;position:relative;appearance:none}
+.ib::after{content:'';position:absolute;left:10px;right:10px;bottom:10px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
 .ib:hover::after{transform:scaleX(1);transform-origin:left}
-.badge{font-size:11px;font-weight:700}
+.badge{font-size:inherit;font-weight:inherit}
 main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
 .bar{position:sticky;top:64px;z-index:10;background:#fff;padding:14px 0 0;border-bottom:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .tabs{display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
@@ -67,17 +70,24 @@ main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
 /* Cart Drawer & Edit Modal */
 #ov,#mov{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
 body.op #ov,body.mop #mov{opacity:1;pointer-events:auto}#mov{z-index:55}
-#dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:50;transform:translateX(100%);transition:transform .32s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}body.op #dr{transform:none}
-#md{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);width:min(540px,92vw);max-height:88vh;background:#fff;border:1px solid var(--bd);z-index:60;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;display:flex;flex-direction:column}
+#dr{position:fixed;top:0;right:0;bottom:0;height:100dvh;width:min(420px,100vw);background:#fff;z-index:50;transform:translateX(100%);transition:transform .32s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}body.op #dr{transform:none}
+#md{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);width:min(540px,92vw);max-height:88dvh;background:#fff;border:1px solid var(--bd);z-index:60;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;display:flex;flex-direction:column}
 body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
-.dh{display:flex;justify-content:space-between;align-items:center;padding:12px 12px 12px 20px;border-bottom:1px solid var(--bd);text-transform:uppercase;letter-spacing:.12em;font-size:12px}
-.db{flex:1;overflow-y:auto;padding:12px 20px 20px}.df{padding:16px 20px;border-top:1px solid var(--bd);background:#fff}
-.ci{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)}.ci img{width:68px;height:90px;object-fit:cover;background:var(--sf)}
-.q{display:inline-flex;align-items:center;border:1px solid var(--bd)}.q button{background:none;color:var(--fg);border:0;min-width:34px;min-height:34px;padding:0;font-size:15px}.q span{min-width:24px;text-align:center;font-size:13px}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:10px 10px 10px 18px;border-bottom:1px solid var(--bd);text-transform:uppercase;letter-spacing:.12em;font-size:12px;flex-shrink:0}
+.db{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 18px 20px}
+.df{padding:14px 18px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--bd);background:#fff;flex-shrink:0}
+.ci{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--bd)}.ci img{width:68px;height:90px;object-fit:cover;background:var(--sf);flex-shrink:0}
+.ci-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
+.ci-name{font-weight:500;font-size:14px;line-height:1.35;word-break:break-word}
+.q{display:inline-flex;align-items:center;border:1px solid var(--bd)}.q button{background:none;color:var(--fg);border:0;min-width:40px;min-height:40px;padding:0;font-size:16px}.q span{min-width:28px;text-align:center;font-size:13px;font-weight:500}
 .fm{display:grid;gap:10px}.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);font-weight:600;margin-top:4px}
 .t{display:flex;justify-content:space-between;gap:10px;align-items:center}
 #ts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:90vw}
 .toast{background:var(--fg);color:#fff;padding:12px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;animation:f .25s ease both}
+/* Digital Receipt Box */
+.receipt-card{margin-top:20px;padding:20px;background:var(--sf);border:1px solid var(--fg)}
+.receipt-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--bd);padding-bottom:12px;margin-bottom:12px}
+.receipt-brand{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 /* Admin & Account */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0 8px}
 .stat{background:var(--sf);border:1px solid var(--bd);padding:14px 16px}.stat b{display:block;font-size:20px;margin-top:2px}
@@ -86,6 +96,7 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
 .chips{display:flex;gap:8px;flex-wrap:wrap;width:100%}.chip{padding:6px 14px;border:1px solid var(--bd);font-size:12px;background:var(--sf);text-transform:uppercase;letter-spacing:.06em}.chip b{cursor:pointer;margin-left:4px}
 .st{display:inline-block;padding:3px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:#fff;background:#9a7b2c}
 .st.preparing{background:var(--prep)}.st.shipped{background:var(--ship)}.st.delivered,.st.approved{background:var(--ok)}.st.rejected{background:var(--no)}
+.rcpt{display:inline-block;padding:3px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;border:1px solid var(--fg);color:var(--fg);background:var(--sf);margin-left:6px}
 .st-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .ethumbs{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0}
 .ethumb{position:relative;width:68px;height:90px;border:1px solid var(--bd);background:var(--sf)}
@@ -93,7 +104,7 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
 .ethumb button{position:absolute;top:2px;right:2px;width:22px;height:22px;min-height:0;padding:0;font-size:12px;background:rgba(0,0,0,.78);color:#fff;border:0}
 #ft{border-top:1px solid var(--bd);margin-top:40px;background:var(--sf)}.fi{max-width:1280px;margin:0 auto;padding:28px 24px 36px}.soc{display:flex;flex-wrap:wrap;margin-left:-10px}
 .auth{max-width:380px;margin:0 auto;padding-top:16px}.btn{display:block;text-align:center;background:var(--fg);color:#fff;padding:13px;text-decoration:none;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.btn.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}
-.lk{background:none;color:var(--fg);border:0;padding:0 4px;min-height:40px;text-decoration:underline;text-transform:none;letter-spacing:0;font-size:13px}[hidden]{display:none!important}#acc{position:relative}.dot{position:absolute;top:10px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.lk{background:none;color:var(--fg);border:0;padding:0 4px;min-height:40px;text-decoration:underline;text-transform:none;letter-spacing:0;font-size:13px}[hidden]{display:none!important}#acc{position:relative}.dot{position:absolute;top:12px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--ok)}
 @media(min-width:768px){
   .grid{grid-template-columns:repeat(3,1fr);gap:40px 20px}
   .stats{grid-template-columns:repeat(4,1fr)}
@@ -104,11 +115,26 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
   .zoom-box{flex:1}
 }
 @media(min-width:1050px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.logo{font-size:19px;letter-spacing:.08em}header{padding:0 10px 0 14px}main{padding:0 14px 48px}.srch{width:100%}.ib{padding:0 6px;font-size:11px}}
+@media(max-width:640px){
+  header{padding:0 8px 0 14px}
+  .logo{font-size:16px;letter-spacing:.07em}
+  nav{gap:0}
+  .ib,button.ib{padding:0 6px;font-size:11px;letter-spacing:.06em;min-width:34px}
+  .ib::after{left:6px;right:6px}
+  main{padding:0 14px 48px}
+  .srch{width:100%}
+  .db input[type="text"],.db input[type="tel"],.db input:not([type]),.db textarea,.db select{font-size:16px}
+  .df button{min-height:48px}
+}
+@media print{
+  .promo,header,#ft,.no-print{display:none!important}
+  body{background:#fff}
+  .receipt-card{border:1px solid #000;background:#fff}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <div class="promo">Order Easily via WhatsApp</div>
-<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/">Home</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" data-a="cart" aria-label="Open cart">Cart (<span class="badge" id="cb">0</span>)</button></nav></header>
+<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/">Home</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" type="button" data-a="cart" aria-label="Open cart">Cart <span class="badge" id="cb">(0)</span></button></nav></header>
 <main id="app"></main><footer id="ft"></footer>
 <div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping cart"></aside>
 <div id="mov" data-a="closem"></div><div id="md" role="dialog" aria-modal="true" aria-label="Edit product"></div>
@@ -130,7 +156,7 @@ const CFG={
 const WA="601131050597";                  // seller WhatsApp number, country code, no + or spaces
 const SHOP="Zabeda Apparel";              // shop name
 const CUR="RM";                           // currency
-const SELLER_EMAIL="hajadfghjk@gmail.com"; // the seller login email (must match your Firestore rules)
+const SELLER_EMAILS=["hajadfghjk@gmail.com"]; // add a 2nd email like ["hajadfghjk@gmail.com","admin2@gmail.com"]
 const IG="https://instagram.com/yourshop"; // leave "" to hide
 const TT="https://tiktok.com/@yourshop";   // leave "" to hide
 const FB="https://facebook.com/yourshop";  // leave "" to hide
@@ -141,8 +167,9 @@ const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const m=n=>CUR+' '+Number(n).toFixed(2);
 const imgs=p=>Array.isArray(p?.imgs)&&p.imgs.length?p.imgs:(p?.img?[p.img]:[]);
+const cleanPhone=p=>{let d=String(p||'').replace(/\D/g,'');if(d.startsWith('0'))d='60'+d.slice(1);return d};
 let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',selImg=0,pdpQty=1,editId=null,editImgs=[],unsubO,unsubU,unsubV;
-const sel=e=>!!e&&e.toLowerCase()==SELLER_EMAIL.toLowerCase(),isSeller=()=>sel(user?.email);
+const sel=e=>!!e&&SELLER_EMAILS.map(x=>x.toLowerCase()).includes(e.toLowerCase()),isSeller=()=>sel(user?.email);
 const ae=e=>({'auth/invalid-credential':'Wrong email or password.','auth/invalid-email':'Please enter a valid email.','auth/email-already-in-use':'This email already has an account. Log in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/missing-password':'Please enter a password.','auth/too-many-requests':'Too many attempts. Try again later.'}[e.code]||'Something went wrong ('+e.code+').');
 try{cart=JSON.parse(localStorage.cart||'{}')}catch{}
 const save=()=>{try{localStorage.cart=JSON.stringify(cart)}catch{}};
@@ -152,7 +179,7 @@ const watch=id=>onSnapshot(doc(db,'orders',id),d=>{if(d.exists())MY[id]={id,...d
 ids.forEach(watch);
 const list=s=>s.docs.map(d=>({id:d.id,...d.data()}));
 $('#nm').textContent=SHOP;document.title=SHOP;
-const ic=s=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${s}</svg>`;
+const ic=s=>`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${s}</svg>`;
 const soc=[[IG,'Instagram','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5"/>'],[TT,'TikTok','<path d="M15 3v11a4 4 0 1 1-4-4M15 3c0 3 2 5 5 5"/>'],[FB,'Facebook','<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8z"/>']].filter(x=>x[0]).map(([u,n,s])=>`<a class="ib" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${n}">${ic(s)}</a>`).join('');
 $('#ft').innerHTML=`<div class="fi"><div class="soc">${soc}<a class="ib" href="https://wa.me/${WA}" target="_blank" rel="noopener">WhatsApp</a></div><p class="mu">© ${new Date().getFullYear()} ${esc(SHOP)}. All rights reserved.</p></div>`;
 
@@ -169,8 +196,11 @@ addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;selImg=0;pd
 const cartItems=()=>Object.entries(cart).map(([id,q])=>({p:P.find(x=>x.id==id),q})).filter(x=>x.p&&x.p.qty>0).map(x=>({...x,q:Math.min(x.q,x.p.qty)}));
 const total=()=>cartItems().reduce((s,x)=>s+x.p.price*x.q,0);
 const waUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
- const t=`Hi ${SHOP}, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}\nOrder link: ${link}`;
+ const t=`Hi ${SHOP}, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}${o.receipt?'\nReceipt Requested: Yes':''}\nOrder link: ${link}`;
  return`https://wa.me/${WA}?text=${encodeURIComponent(t)}`};
+const custReceiptWaUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
+ const t=`Hi ${o.name}, thank you for shopping with ${SHOP}! Your payment has been received and your order is now being prepared.\n\nOFFICIAL RECEIPT\nOrder ID: #${o.id.slice(0,8).toUpperCase()}\n`+o.items.map(i=>`- ${i.name} x${i.qty} (${m(i.price*i.qty)})`).join('\n')+`\nTotal Paid: ${m(o.total)}\nView/Print Official Receipt: ${link}`;
+ return`https://wa.me/${cleanPhone(o.phone)}?text=${encodeURIComponent(t)}`};
 const toast=t=>{const d=document.createElement('div');d.className='toast';d.textContent=t;$('#ts').append(d);setTimeout(()=>d.remove(),2000)};
 
 function render(bg){
@@ -180,15 +210,21 @@ function render(bg){
  app.innerHTML=h=='/admin'?admin():h=='/login'?loginPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():h.startsWith('/product/')?productPage(h.slice(9)):shop();
  renderCart();
 }
-function renderCart(){$('#cb').textContent=cartItems().reduce((s,x)=>s+x.q,0);$('#dr').innerHTML=drawer();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
+function renderCart(){$('#cb').textContent='('+cartItems().reduce((s,x)=>s+x.q,0)+')';$('#dr').innerHTML=drawer();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
 function drawer(){const it=cartItems();
- return`<div class="dh"><b>Shopping Cart (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" data-a="close" aria-label="Close cart">✕</button></div>
- <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${imgs(x.p)[0]||''}" alt=""><div style="flex:1"><div style="font-weight:500">${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div><div class="t" style="margin-top:8px"><span class="q"><button data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button class="lk" style="color:var(--mu)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h2>Delivery Details</h2><div class="fm"><input id="nmi" placeholder="Full Name" value="${esc(info.name)}"><input id="phi" type="tel" placeholder="Phone Number" value="${esc(info.phone)}"><textarea id="adi" rows="3" placeholder="Delivery Address">${esc(info.address)}</textarea></div>${user?'':'<p class="mu">Checking out as guest. <a href="#/login">Sign in</a> to save orders to your account.</p>'}<p class="mu">Your order is recorded first, then WhatsApp opens so you can complete payment directly with us.</p>`:'<p class="mu" style="padding-top:24px">Your cart is currently empty.</p>'}</div>
- ${it.length?`<div class="df"><div class="t" style="margin-bottom:12px"><span style="text-transform:uppercase;letter-spacing:.1em;font-size:12px">Subtotal</span><b>${m(total())}</b></div><button class="w" style="width:100%" data-a="checkout">Proceed to WhatsApp Checkout</button></div>`:''}`}
+ return`<div class="dh"><b>Shopping Cart (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" type="button" data-a="close" aria-label="Close cart">✕</button></div>
+ <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${imgs(x.p)[0]||''}" alt=""><div class="ci-body"><div><div class="ci-name">${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div></div><div class="t" style="margin-top:8px"><span class="q"><button type="button" data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button type="button" data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button type="button" class="lk" style="color:var(--mu)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h2>Delivery Details</h2><div class="fm">
+   <input id="nmi" placeholder="Full Name" value="${esc(info.name)}">
+   <input id="phi" type="tel" placeholder="Phone Number" value="${esc(info.phone)}">
+   <textarea id="adi" rows="3" placeholder="Delivery Address">${esc(info.address)}</textarea>
+   ${user?'':`<label class="chk"><input type="checkbox" id="agec" ${info.over18?'checked':''}><span><b>Yes, I am 18 or older</b> <span class="mu">(Required to place an order)</span></span></label>`}
+   <label class="chk"><input type="checkbox" id="rcptc" ${info.receipt?'checked':''}><span><b>Request a receipt</b> <span class="mu">(Optional — automatically issued once order is accepted / payment received)</span></span></label>
+ </div>${user?'':'<p class="mu">Checking out as guest. <a href="#/login">Sign in</a> to skip age check and save orders to your account.</p>'}<p class="mu">Your order is recorded first, then WhatsApp opens so you can complete payment directly with us.</p>`:'<p class="mu" style="padding-top:24px">Your cart is currently empty.</p>'}</div>
+ ${it.length?`<div class="df"><div class="t" style="margin-bottom:12px"><span style="text-transform:uppercase;letter-spacing:.1em;font-size:12px">Subtotal</span><b>${m(total())}</b></div><button type="button" class="w" style="width:100%" data-a="checkout">Proceed to WhatsApp Checkout</button></div>`:''}`}
 
 function grid(){const q=S.toLowerCase(),ps=P.filter(p=>(cat=='All'||p.cat==cat)&&(!q||(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q))).sort((a,b)=>b.createdAt-a.createdAt);
  return ps.map((p,i)=>{const ph=imgs(p);
-  return`<div class="p" data-a="view" data-id="${p.id}" style="animation-delay:${Math.min(i,10)*35}ms"><div class="im"><img loading="lazy" src="${ph[0]||''}" alt="${esc(p.name)}">${ph[1]?`<img class="alt-img" loading="lazy" src="${ph[1]}" alt="">`:''}${p.qty>0?`<button class="qadd" data-a="add" data-id="${p.id}">+ Quick Add</button>`:'<span class="sold">Sold Out</span>'}</div><div class="meta"><div class="n">${esc(p.name)}</div><div class="pr">${m(p.price)}</div>${p.qty>0&&p.qty<=3?`<div class="low">Only ${p.qty} left</div>`:''}</div></div>`}).join('')||'<p class="mu" style="grid-column:1/-1;padding:32px 0">No items match your search.</p>'}
+  return`<div class="p" data-a="view" data-id="${p.id}" style="animation-delay:${Math.min(i,10)*35}ms"><div class="im"><img loading="lazy" src="${ph[0]||''}" alt="${esc(p.name)}">${ph[1]?`<img class="alt-img" loading="lazy" src="${ph[1]}" alt="">`:''}${p.qty>0?`<button type="button" class="qadd" data-a="add" data-id="${p.id}">+ Quick Add</button>`:'<span class="sold">Sold Out</span>'}</div><div class="meta"><div class="n">${esc(p.name)}</div><div class="pr">${m(p.price)}</div>${p.qty>0&&p.qty<=3?`<div class="low">Only ${p.qty} left</div>`:''}</div></div>`}).join('')||'<p class="mu" style="grid-column:1/-1;padding:32px 0">No items match your search.</p>'}
 
 function shop(){
  return`<div class="bar"><div class="tabs">${['All',...C.map(c=>c.name)].map(c=>`<span class="tab ${c==cat?'on':''}" data-a="cat" data-id="${esc(c)}">${esc(c)}</span>`).join('')}</div><div class="srch"><input id="q" type="search" placeholder="Search collection…" value="${esc(S)}"></div></div><div class="grid" id="gr">${grid()}</div>`}
@@ -215,21 +251,29 @@ function productPage(id){
      ${p.qty>0&&p.qty<=3?`<div class="low">Low stock — only ${p.qty} left</div>`:''}
      <div class="pdp-desc">${p.desc?esc(p.desc):'Crafted with refined attention to detail and effortless everyday elegance.'}</div>
      ${p.qty>0?`<div class="pdp-acts">
-       <span class="q"><button data-a="pdec" aria-label="Decrease">−</button><span>${pdpQty}</span><button data-a="pinc" data-id="${p.qty}" aria-label="Increase">+</button></span>
-       <button data-a="addpdp" data-id="${p.id}">Add to Cart — ${m(p.price*pdpQty)}</button>
-     </div>`:'<button disabled style="width:100%;height:48px">Sold Out</button>'}
+       <span class="q"><button type="button" data-a="pdec" aria-label="Decrease">−</button><span>${pdpQty}</span><button type="button" data-a="pinc" data-id="${p.qty}" aria-label="Increase">+</button></span>
+       <button type="button" data-a="addpdp" data-id="${p.id}">Add to Cart — ${m(p.price*pdpQty)}</button>
+     </div>`:'<button type="button" disabled style="width:100%;height:48px">Sold Out</button>'}
    </div>
  </div>`;
 }
 
 function loginPage(){
- if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm">${isSeller()?'<a class="btn" href="#/admin">Open Seller Dashboard</a>':''}<a class="btn alt" href="#/orders">My Orders</a><button class="x" data-a="logout">Sign Out</button></div></div>`;
+ if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm">${isSeller()?'<a class="btn" href="#/admin">Open Seller Dashboard</a>':''}<a class="btn alt" href="#/orders">My Orders</a><button type="button" class="x" data-a="logout">Sign Out</button></div></div>`;
  const up=mode=='up';
- return`<div class="auth"><h2>${up?'Create Account':'Sign In'}</h2><div class="fm"><input id="em" type="email" autocomplete="email" placeholder="Email Address"><input id="pw" type="password" autocomplete="${up?'new-password':'current-password'}" placeholder="Password${up?' (6+ characters)':''}"><button data-a="login">${up?'Create Account':'Sign In'}</button></div>${up?'':'<button class="lk" data-a="forgot">Forgot password?</button>'}<p class="mu">${up?'Already have an account?':'New customer?'} <button class="lk" data-a="mode">${up?'Sign in':'Create an account'}</button></p><p class="mu">Guest checkout is always available without an account.</p></div>`}
+ return`<div class="auth"><h2>${up?'Create Account':'Sign In'}</h2><div class="fm">
+   <input id="em" type="email" autocomplete="email" placeholder="Email Address">
+   <input id="pw" type="password" autocomplete="${up?'new-password':'current-password'}" placeholder="Password${up?' (6+ characters)':''}">
+   ${up?`<label class="chk"><input type="checkbox" id="reg18"><span><b>Yes, I am 18 or older</b> <span class="mu">(Required to create an account)</span></span></label>`:''}
+   <button type="button" data-a="login">${up?'Create Account':'Sign In'}</button>
+ </div>${up?'':'<button type="button" class="lk" data-a="forgot">Forgot password?</button>'}<p class="mu">${up?'Already have an account?':'New customer?'} <button type="button" class="lk" data-a="mode">${up?'Sign in':'Create an account'}</button></p><p class="mu">Guest checkout is always available without an account.</p></div>`}
 
 function myOrders(){
  const l=Object.values({...MY,...UO}).sort((a,b)=>b.createdAt-a.createdAt);
- return`<h2>Order History</h2>${l.map(o=>`<a href="#/order/${o.id}" style="text-decoration:none;color:inherit"><div class="ord"><div class="t"><b>${new Date(o.createdAt).toLocaleDateString()} · ${m(o.total)}</b><span class="st ${o.status}">${o.status}</span></div><div class="mu" style="margin-top:6px">${o.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</div></div></a>`).join('')||'<p class="mu">No orders found on this device.</p>'}${user?'<p class="mu">Orders placed while signed in are synced to your account.</p>':'<p class="mu">Guest orders are stored on this browser only. <a href="#/login">Sign in</a> to access them across devices.</p>'}`}
+ return`<h2>Order History</h2>${l.map(o=>{
+  const isAccepted=['preparing','approved','shipped','delivered'].includes(o.status);
+  return`<a href="#/order/${o.id}" style="text-decoration:none;color:inherit"><div class="ord"><div class="t"><b>${new Date(o.createdAt).toLocaleDateString()} · ${m(o.total)}</b><span><span class="st ${o.status}">${o.status}</span>${o.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}</span></div><div class="mu" style="margin-top:6px">${o.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</div></div></a>`;
+ }).join('')||'<p class="mu">No orders found on this device.</p>'}${user?'<p class="mu">Orders placed while signed in are synced to your account.</p>':'<p class="mu">Guest orders are stored on this browser only. <a href="#/login">Sign in</a> to access them across devices.</p>'}`}
 
 const msg={
  pending:'Awaiting payment confirmation from our boutique.',
@@ -241,27 +285,42 @@ const msg={
 };
 function orderPage(){
  if(OV===null)return'<p class="mu" style="padding-top:24px">Loading order details…</p>';if(!OV)return'<h2>Order not found</h2>';
- return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span><p style="margin-top:12px">${msg[OV.status]||''}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
+ const isAccepted=['preparing','approved','shipped','delivered'].includes(OV.status);
+ const showReceipt=OV.receipt&&isAccepted;
+ return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span>${OV.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}<p style="margin-top:12px">${msg[OV.status]||''}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
  ${OV.items.map(i=>`<div class="t" style="padding:4px 0"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<hr style="border:0;border-top:1px solid var(--bd);margin:12px 0"><div class="t"><b>Total</b><b>${m(OV.total)}</b></div>
- ${OV.status=='pending'?`<p style="margin-top:16px"><button class="w" data-a="wa">Complete Payment on WhatsApp</button></p>`:''}</div><p class="mu"><a href="#/">← Continue Shopping</a></p>`}
+ ${OV.status=='pending'?`<p style="margin-top:16px"><button type="button" class="w" data-a="wa">Complete Payment on WhatsApp</button></p>`:''}
+ ${showReceipt?`<div class="receipt-card">
+   <div class="receipt-head">
+     <div><div class="receipt-brand">${esc(SHOP)}</div><div class="mu">Official Payment Receipt</div></div>
+     <div style="text-align:right"><div style="font-weight:600;font-size:12px">RECEIPT #${esc(OV.id.slice(0,8).toUpperCase())}</div><div class="mu">${new Date(OV.receiptIssuedAt||OV.createdAt).toLocaleDateString()}</div></div>
+   </div>
+   <div class="mu" style="margin-bottom:10px">Billed to: <b>${esc(OV.name)}</b> · ${esc(OV.phone)}<br>${esc(OV.address)}</div>
+   ${OV.items.map(i=>`<div class="t" style="padding:3px 0"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}
+   <hr style="border:0;border-top:1px solid var(--bd);margin:10px 0">
+   <div class="t"><b>Total Paid</b><b>${m(OV.total)}</b></div>
+   <p class="no-print" style="margin:14px 0 0"><button type="button" class="alt" onclick="window.print()">Print / Save PDF Receipt</button></p>
+ </div>`:''}</div><p class="mu no-print"><a href="#/">← Continue Shopping</a></p>`}
 
 const ordCard=o=>{
  const st=o.status=='approved'?'preparing':o.status;
- return`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span class="st ${st}">${st}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
+ const isAccepted=['preparing','approved','shipped','delivered'].includes(st);
+ return`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span><span class="st ${st}">${st}</span>${o.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
  <div style="margin:10px 0">${o.items.map(i=>`<div class="t"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}</div><div class="t"><b>Total</b><b>${m(o.total)}</b></div>
  <div class="st-btns">
-   ${st=='pending'?`<button data-a="setst" data-id="${o.id}" data-st="preparing">Confirm & Preparing</button> <button class="x" data-a="setst" data-id="${o.id}" data-st="rejected">Reject</button>`:''}
-   ${st=='preparing'?`<button data-a="setst" data-id="${o.id}" data-st="shipped">Mark Shipped</button>`:''}
-   ${st=='shipped'?`<button data-a="setst" data-id="${o.id}" data-st="delivered">Mark Delivered</button>`:''}
+   ${st=='pending'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="preparing">Confirm & Preparing</button> <button type="button" class="x" data-a="setst" data-id="${o.id}" data-st="rejected">Reject</button>`:''}
+   ${st=='preparing'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="shipped">Mark Shipped</button>`:''}
+   ${st=='shipped'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="delivered">Mark Delivered</button>`:''}
+   ${o.receipt&&isAccepted?`<a class="btn alt" style="padding:10px 14px;display:inline-block" href="${custReceiptWaUrl(o)}" target="_blank" rel="noopener">Send Receipt via WhatsApp</a>`:''}
  </div></div>`;
 };
 
 function admin(){
  if(!user)return loginPage();
- if(!isSeller())return'<h2>Restricted Area</h2><p class="mu">Signed in as '+esc(user.email)+', which does not have seller access.</p><button class="x" data-a="logout">Sign Out</button>';
+ if(!isSeller())return'<h2>Restricted Area</h2><p class="mu">Signed in as '+esc(user.email)+', which does not have seller access.</p><button type="button" class="x" data-a="logout">Sign Out</button>';
  const active=O.filter(o=>['pending','preparing','approved','shipped'].includes(o.status)).length;
  const rev=O.filter(o=>['preparing','approved','shipped','delivered'].includes(o.status)).reduce((s,o)=>s+Number(o.total||0),0);
- return`<div class="t"><h2>Seller Dashboard</h2><button class="x" data-a="logout">Sign Out</button></div>
+ return`<div class="t"><h2>Seller Dashboard</h2><button type="button" class="x" data-a="logout">Sign Out</button></div>
  <div class="stats">
    <div class="stat"><span class="mu">Active Orders</span><b>${active}</b></div>
    <div class="stat"><span class="mu">Total Orders</span><b>${O.length}</b></div>
@@ -277,20 +336,20 @@ function admin(){
    <input id="pq" type="number" min="0" placeholder="Stock Quantity">
    <input id="pi" type="file" accept="image/*" multiple title="Select one or more images">
    <textarea id="pd" rows="3" placeholder="Product description (fabric, sizing, care instructions, styling notes…)"></textarea>
-   <button data-a="addp">Publish Product</button>
+   <button type="button" data-a="addp">Publish Product</button>
  </div>
- <h2>Categories</h2><div class="box"><input id="cn" placeholder="New Category Name"><button data-a="addc">Add Category</button><div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div></div>
+ <h2>Categories</h2><div class="box"><input id="cn" placeholder="New Category Name"><button type="button" data-a="addc">Add Category</button><div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div></div>
  <h2>Catalog (${P.length})</h2>${P.map(p=>{const ph=imgs(p);return`<div class="row">
    <img src="${ph[0]||''}" alt="">
    <div><b>${esc(p.name)}</b> <span class="mu">(${ph.length} photo${ph.length===1?'':'s'})</span><br><span class="mu">${esc(p.cat)} · ${m(p.price)} · Stock: ${p.qty}</span></div>
-   <button class="alt" data-a="edit" data-id="${p.id}">Edit</button>
-   <button class="x" data-a="delp" data-id="${p.id}">Delete</button>
+   <button type="button" class="alt" data-a="edit" data-id="${p.id}">Edit</button>
+   <button type="button" class="x" data-a="delp" data-id="${p.id}">Delete</button>
  </div>`}).join('')}`}
 
 function renderModal(){
  const p=P.find(x=>x.id==editId);
  if(!p){document.body.classList.remove('mop');return}
- $('#md').innerHTML=`<div class="dh"><b>Edit Product</b><button class="ib" data-a="closem" aria-label="Close">✕</button></div>
+ $('#md').innerHTML=`<div class="dh"><b>Edit Product</b><button type="button" class="ib" data-a="closem" aria-label="Close">✕</button></div>
  <div class="db"><div class="fm">
    <label class="lbl">Product Name</label><input id="epn" value="${esc(p.name)}">
    <label class="lbl">Category</label><select id="epc">${[...new Set([p.cat,...C.map(c=>c.name)])].filter(Boolean).map(c=>`<option ${c==p.cat?'selected':''}>${esc(c)}</option>`).join('')}</select>
@@ -303,7 +362,7 @@ function renderModal(){
    <div class="ethumbs">${editImgs.map((u,i)=>`<div class="ethumb"><img src="${u}" alt=""><button type="button" data-a="rmimg" data-id="${i}" aria-label="Remove photo">✕</button></div>`).join('')}</div>
    ${editImgs.length<5?`<input id="epi" type="file" accept="image/*" multiple>`:'<span class="mu">Maximum 5 photos reached.</span>'}
  </div></div>
- <div class="df"><div class="t"><button class="alt" style="flex:1" data-a="closem">Cancel</button><button style="flex:2" data-a="saveedit">Save Changes</button></div></div>`;
+ <div class="df"><div class="t"><button type="button" class="alt" style="flex:1" data-a="closem">Cancel</button><button type="button" style="flex:2" data-a="saveedit">Save Changes</button></div></div>`;
 }
 
 const img=f=>new Promise(r=>{const i=new Image;i.onload=()=>{const s=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.76))};i.src=URL.createObjectURL(f)});
@@ -313,10 +372,14 @@ async function setStatus(o,s){
  if(!o)return;
  const wasDeducted=['preparing','approved','shipped','delivered'].includes(o.status);
  const willDeduct=['preparing','approved','shipped','delivered'].includes(s);
+ const upd={status:s,...(!wasDeducted&&willDeduct&&o.receipt?{receiptIssuedAt:Date.now()}:{})};
  try{await runTransaction(db,async t=>{const ps=[];
   if(!wasDeducted&&willDeduct)for(const i of o.items){const r=doc(db,'products',i.id),d=await t.get(r);if(!d.exists())continue;if(d.data().qty<i.qty)throw Error('Not enough stock for '+i.name);ps.push([r,d.data().qty-i.qty])}
-  ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),{status:s})});
-  toast('Order updated to '+s);
+  ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),upd)});
+  toast(!wasDeducted&&willDeduct&&o.receipt?'Order confirmed & receipt issued':'Order updated to '+s);
+  if(!wasDeducted&&willDeduct&&o.receipt&&o.phone){
+   window.open(custReceiptWaUrl({...o,...upd}),'_blank','noopener');
+  }
  }catch(e){alert(e.message)}}
 
 const act={
@@ -331,12 +394,16 @@ const act={
  inc:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)<p.qty){cart[id]++;save();renderCart()}},
  dec:id=>{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id];save();renderCart()},
  rm:id=>{delete cart[id];save();renderCart()},
- checkout:async b=>{const name=v('nmi'),phone=v('phi'),address=v('adi');if(!name||!phone||!address)return alert('Please enter your name, phone number and delivery address.');b.disabled=true;
+ checkout:async b=>{const name=v('nmi'),phone=v('phi'),address=v('adi'),over18=user?true:!!$('#agec')?.checked,receipt=!!$('#rcptc')?.checked;
+  if(!name||!phone||!address)return alert('Please enter your name, phone number and delivery address.');
+  if(!over18)return alert('Please confirm that you are 18 or older before placing an order.');
+  b.disabled=true;
   const items=cartItems().map(x=>({id:x.p.id,name:x.p.name,price:x.p.price,qty:x.q}));
-  try{const o={name,phone,address,...(user?{uid:user.uid}:{}),items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
-   ids.push(r.id);info={name,phone,address};cart={};save();keep();watch(r.id);act.close();location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
+  try{const o={name,phone,address,over18:true,receipt,...(user?{uid:user.uid}:{}),items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
+   ids.push(r.id);info={name,phone,address,over18,receipt};cart={};save();keep();watch(r.id);act.close();location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
  wa:()=>location.href=waUrl(OV),
- login:async()=>{try{const c=await(mode=='in'?signInWithEmailAndPassword:createUserWithEmailAndPassword)(auth,v('em'),$('#pw').value);location.hash=sel(c.user.email)?'/admin':'/'}catch(e){alert(ae(e))}},
+ login:async()=>{if(mode=='up'&&!$('#reg18')?.checked)return alert('Please confirm that you are 18 or older to create an account.');
+  try{const c=await(mode=='in'?signInWithEmailAndPassword:createUserWithEmailAndPassword)(auth,v('em'),$('#pw').value);location.hash=sel(c.user.email)?'/admin':'/'}catch(e){alert(ae(e))}},
  mode:()=>{mode=mode=='in'?'up':'in';render()},
  forgot:async()=>{const e=v('em');if(!e)return alert('Enter your email address first.');try{await sendPasswordResetEmail(auth,e);alert('Password reset email sent. Check your inbox.')}catch(x){alert(ae(x))}},
  logout:()=>signOut(auth),
@@ -365,10 +432,13 @@ document.onclick=e=>{
  if(b){e.stopPropagation();act[b.dataset.a](b.dataset.id||b,b)}
 };
 document.onchange=async e=>{
- if(e.target.id=='epi'&&e.target.files.length){
-  const extra=await Promise.all([...e.target.files].slice(0,5-editImgs.length).map(img));
+ const t=e.target;
+ if(t.id=='epi'&&t.files.length){
+  const extra=await Promise.all([...t.files].slice(0,5-editImgs.length).map(img));
   editImgs=[...editImgs,...extra];
   renderModal();
+ }else if(t.id=='agec'||t.id=='rcptc'){
+  info[t.id=='agec'?'over18':'receipt']=t.checked;keep();
  }
 };
 document.oninput=e=>{const t=e.target;
