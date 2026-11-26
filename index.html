@@ -1,34 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
 <title>My Clothing Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f3ee;--fg:#22201d;--mu:#7a746c;--card:#fff;--ac:#1f3d36;--bd:#e3ddd3;--ok:#1f7a4d;--no:#b3392f;--wa:#1faa59}
-@media(prefers-color-scheme:dark){:root{--bg:#171715;--fg:#efebe4;--mu:#9b948a;--card:#222220;--ac:#8fc5b4;--bd:#34332f}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Figtree,system-ui,sans-serif}
-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--bg);z-index:5}
-h1{font:600 26px Fraunces,Georgia,serif;margin:0}h1 a{color:inherit;text-decoration:none}h2{font:600 20px Fraunces,Georgia,serif;margin:28px 0 10px}
-main{max-width:1000px;margin:0 auto;padding:16px 20px 60px}a{color:var(--ac)}.mu{color:var(--mu);font-size:14px}
-button,input,select,textarea{font:inherit;padding:9px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--fg)}
-button{background:var(--ac);color:var(--bg);border:0;cursor:pointer;font-weight:600}button.x{background:none;color:var(--no);border:1px solid var(--no)}button.w{background:var(--wa);color:#fff}button:disabled{opacity:.4}
-:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{padding:6px 14px;border:1px solid var(--bd);border-radius:99px;cursor:pointer;background:var(--card);font-size:14px}.chip.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
-.p img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;background:var(--bd)}.p b{display:block;margin-top:8px}.p button{width:100%;margin-top:8px}
-.box,.row,.ord{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.ord{display:block}.row img{width:56px;height:56px;object-fit:cover;border-radius:8px}.row>div{flex:1;min-width:120px}.row input{width:90px}
+:root{--bg:#fff;--fg:#1a1a1a;--mu:#6b6b6b;--ac:#1f3d36;--bd:#e5e5e5;--sf:#f5f5f3;--ok:#1f7a4d;--no:#b3392f;--wa:#1faa59}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Figtree,system-ui,sans-serif}body.op{overflow:hidden}
+a{color:var(--ac)}.mu{color:var(--mu);font-size:14px}h2{font-size:20px;margin:28px 0 10px}
+button,input,select,textarea{font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--bd);background:#fff;color:var(--fg);border-radius:2px;min-height:46px}
+button{background:var(--ac);color:#fff;border:0;cursor:pointer;font-weight:600}button:disabled{opacity:.4}button.x{background:none;color:var(--no);border:1px solid var(--no)}button.w{background:var(--wa)}
+textarea{resize:vertical;width:100%}:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.ib{background:none;color:var(--fg);border:0;min-width:44px;min-height:44px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:600;font-size:15px;cursor:pointer;border-radius:0}
+header{position:sticky;top:0;z-index:20;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 16px;background:#fff;border-bottom:1px solid var(--bd)}
+.logo{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;font-size:20px;letter-spacing:.02em;color:var(--fg);text-decoration:none}nav{display:flex;align-items:center}
+.hs{display:none}.badge{background:var(--ac);color:#fff;border-radius:99px;font-size:12px;min-width:20px;height:20px;display:inline-grid;place-items:center;padding:0 5px}
+main{max-width:1100px;margin:0 auto;padding:0 16px 40px;min-height:60vh}
+.bar{position:sticky;top:56px;z-index:10;background:#fff;padding-top:12px;border-bottom:1px solid var(--bd)}.bar input{width:100%}
+.tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;margin-top:4px}.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 0;white-space:nowrap;cursor:pointer;color:var(--mu);font-weight:600;border-bottom:2px solid transparent}.tab.on{color:var(--fg);border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 12px;padding-top:16px}
+.p{animation:f .5s ease both}@keyframes f{from{opacity:0;transform:translateY(10px)}}
+.im{position:relative;overflow:hidden;background:var(--sf);aspect-ratio:3/4}.im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}.p:hover img{transform:scale(1.06)}
+.add{position:absolute;right:8px;bottom:8px;width:44px;height:44px;min-height:0;padding:0;border-radius:50%;font-size:26px;line-height:1;background:#fff;color:var(--fg);box-shadow:0 1px 8px rgba(0,0,0,.2);transition:transform .15s}.add:active{transform:scale(.9)}
+.sold{position:absolute;left:8px;bottom:8px;background:#fff;padding:2px 8px;font-size:12px;font-weight:600}
+.n{margin-top:8px;font-size:14px}.pr{font-weight:700}.low{color:var(--no);font-size:12px}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}body.op #ov{opacity:1;pointer-events:auto}
+#dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:50;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}body.op #dr{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:6px 6px 6px 16px;border-bottom:1px solid var(--bd)}.db{flex:1;overflow-y:auto;padding:8px 16px 16px}.df{padding:12px 16px;border-top:1px solid var(--bd)}
+.ci{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}.ci img{width:72px;height:96px;object-fit:cover;background:var(--sf)}
+.q{display:inline-flex;align-items:center;border:1px solid var(--bd)}.q button{background:none;color:var(--fg);min-width:40px;min-height:40px;padding:0;font-size:18px}.q span{min-width:26px;text-align:center}
+.fm{display:grid;gap:8px}.t{display:flex;justify-content:space-between;gap:10px}
+#ts{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:90vw}
+.toast{background:var(--fg);color:#fff;padding:12px 18px;border-radius:2px;font-size:15px;animation:f .25s ease both}
+.box,.row,.ord{background:#fff;border:1px solid var(--bd);padding:14px;margin:10px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.ord{display:block}
+.box>input,.box>select,.box>button,.box>textarea{flex:1 1 180px}.row img{width:56px;height:56px;object-fit:cover}.row>div{flex:1;min-width:120px}.row input{width:100px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;width:100%}.chip{padding:6px 14px;border:1px solid var(--bd);border-radius:99px;font-size:14px;background:var(--sf)}
 .st{display:inline-block;padding:2px 12px;border-radius:99px;font-size:14px;font-weight:600;color:#fff;background:#b8860b}.st.approved{background:var(--ok)}.st.rejected{background:var(--no)}
-.t{display:flex;justify-content:space-between;gap:10px}.q button{padding:2px 10px}
-button{min-height:44px}textarea{resize:vertical}
-@media(max-width:600px){main{padding:12px}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.box>input,.box>select,.box>button,.box>textarea{flex:1 1 100%}.row input{width:100%}.row button{flex:1}h1{font-size:21px}header{padding:12px}}
+#ft{border-top:1px solid var(--bd);margin-top:20px;background:var(--sf)}.fi{max-width:1100px;margin:0 auto;padding:16px 16px 28px}.soc{display:flex;flex-wrap:wrap;margin-left:-10px}
+.auth{max-width:380px;margin:0 auto;padding-top:8px}.btn{display:block;text-align:center;background:var(--ac);color:#fff;padding:13px;text-decoration:none;font-weight:600;border-radius:2px}.btn.alt{background:#fff;color:var(--fg);border:1px solid var(--bd)}
+.lk{background:none;color:var(--ac);padding:0 4px;min-height:44px;text-decoration:underline}[hidden]{display:none!important}#acc{position:relative}.dot{position:absolute;top:10px;right:6px;width:9px;height:9px;border-radius:50%;background:var(--ok);border:2px solid #fff}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:28px 16px}.hs{display:flex}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){.logo{font-size:17px}nav .ib{padding:0 6px}.row button{flex:1}.row input{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header><h1><a href="#/" id="nm"></a></h1><nav style="display:flex;gap:16px"><a href="#/orders">My orders</a><a href="#/cart" id="ct">Cart</a></nav></header>
-<main id="app"></main>
+<header><a class="logo" href="#/" id="nm"></a><nav><span class="hs" id="hs"></span><a class="ib" href="#/admin" id="adm" hidden>Admin</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" data-a="cart" aria-label="Open cart">Cart <span class="badge" id="cb">0</span></button></nav></header>
+<main id="app"></main><footer id="ft"></footer>
+<div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping cart"></aside><div id="ts"></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getFirestore,collection,doc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,query,orderBy,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,collection,doc,addDoc,setDoc,updateDoc,deleteDoc,onSnapshot,query,orderBy,where,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 /* ===== EDIT THESE ===== */
 const CFG={
@@ -42,13 +66,19 @@ const CFG={
 const WA="601131050597";        // seller WhatsApp number, country code, no + or spaces
 const SHOP="My Clothing Shop"; // shop name
 const CUR="RM";                // currency
+const SELLER_EMAIL="hajadfghjk@gmail.com"; // the seller login email (must match your Firestore rules)
+const IG="https://instagram.com/yourshop";   // leave "" to hide
+const TT="https://tiktok.com/@yourshop";     // leave "" to hide
+const FB="https://facebook.com/yourshop";    // leave "" to hide
 /* ====================== */
 
 const db=getFirestore(initializeApp(CFG)),auth=getAuth();
 const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const m=n=>CUR+' '+Number(n).toFixed(2);
-let P=[],C=[],O=[],OV=null,user=null,cat='All',cart={},unsubO,unsubV;
+let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',unsubO,unsubU,unsubV;
+const sel=e=>!!e&&e.toLowerCase()==SELLER_EMAIL.toLowerCase(),isSeller=()=>sel(user?.email);
+const ae=e=>({'auth/invalid-credential':'Wrong email or password.','auth/invalid-email':'Please enter a valid email.','auth/email-already-in-use':'This email already has an account. Log in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/missing-password':'Please enter a password.','auth/too-many-requests':'Too many attempts. Try again later.'}[e.code]||'Something went wrong ('+e.code+').');
 try{cart=JSON.parse(localStorage.cart||'{}')}catch{}
 const save=()=>{try{localStorage.cart=JSON.stringify(cart)}catch{}};
 let MY={},ids=[],info={};try{ids=JSON.parse(localStorage.ords||'[]');info=JSON.parse(localStorage.info||'{}')}catch{}
@@ -57,54 +87,66 @@ const watch=id=>onSnapshot(doc(db,'orders',id),d=>{if(d.exists())MY[id]={id,...d
 ids.forEach(watch);
 const list=s=>s.docs.map(d=>({id:d.id,...d.data()}));
 $('#nm').textContent=SHOP;document.title=SHOP;
+const ic=s=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s}</svg>`;
+const soc=[[IG,'Instagram','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5"/>'],[TT,'TikTok','<path d="M15 3v11a4 4 0 1 1-4-4M15 3c0 3 2 5 5 5"/>'],[FB,'Facebook','<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8z"/>']].filter(x=>x[0]).map(([u,n,s])=>`<a class="ib" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${n}">${ic(s)}</a>`).join('');
+$('#hs').innerHTML=soc;
+$('#ft').innerHTML=`<div class="fi"><div class="soc">${soc}<a class="ib" href="https://wa.me/${WA}" target="_blank" rel="noopener">WhatsApp</a></div><p class="mu">© ${new Date().getFullYear()} ${esc(SHOP)}</p></div>`;
 
 onSnapshot(collection(db,'products'),s=>{P=list(s);render(1)});
 onSnapshot(collection(db,'categories'),s=>{C=list(s).sort((a,b)=>a.name.localeCompare(b.name));render(1)});
-onAuthStateChanged(auth,u=>{user=u;unsubO&&unsubO();unsubO=0;O=[];
- if(u)unsubO=onSnapshot(query(collection(db,'orders'),orderBy('createdAt','desc')),s=>{O=list(s);render(1)});render()});
-addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;const h=location.hash;
+onAuthStateChanged(auth,u=>{user=u;unsubO&&unsubO();unsubU&&unsubU();unsubO=unsubU=0;O=[];UO={};
+ if(isSeller())unsubO=onSnapshot(query(collection(db,'orders'),orderBy('createdAt','desc')),s=>{O=list(s);render(1)});
+ if(u)unsubU=onSnapshot(query(collection(db,'orders'),where('uid','==',u.uid)),s=>{UO=Object.fromEntries(list(s).map(o=>[o.id,o]));render(1)},()=>{});
+ render()});
+addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;const h=location.hash;document.body.classList.remove('op');scrollTo(0,0);
  if(h.startsWith('#/order/'))unsubV=onSnapshot(doc(db,'orders',h.slice(8)),d=>{OV=d.exists()?{id:d.id,...d.data()}:0;render(1)},()=>{OV=0;render(1)});
- render()});dispatchEvent(new Event('hashchange'));
+ render()});
 
 const cartItems=()=>Object.entries(cart).map(([id,q])=>({p:P.find(x=>x.id==id),q})).filter(x=>x.p&&x.p.qty>0).map(x=>({...x,q:Math.min(x.q,x.p.qty)}));
 const total=()=>cartItems().reduce((s,x)=>s+x.p.price*x.q,0);
 const waUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
  const t=`Hi, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}\nOrder link: ${link}`;
  return`https://wa.me/${WA}?text=${encodeURIComponent(t)}`};
+const toast=t=>{const d=document.createElement('div');d.className='toast';d.textContent=t;$('#ts').append(d);setTimeout(()=>d.remove(),1800)};
 
 function render(bg){
+ if(bg&&document.activeElement.id=='q'&&$('#gr')){$('#gr').innerHTML=grid();return}
  if(bg&&/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
- $('#ct').textContent='Cart ('+cartItems().reduce((s,x)=>s+x.q,0)+')';
  const h=location.hash.slice(1)||'/';
- app.innerHTML=h=='/admin'?admin():h=='/cart'?cartPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():shop();
+ app.innerHTML=h=='/admin'?admin():h=='/login'?loginPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():shop();renderCart();
 }
+function renderCart(){$('#cb').textContent=cartItems().reduce((s,x)=>s+x.q,0);$('#dr').innerHTML=drawer();$('#adm').hidden=!isSeller();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
+function drawer(){const it=cartItems();
+ return`<div class="dh"><b>Your cart (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" data-a="close" aria-label="Close cart">✕</button></div>
+ <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${x.p.img}" alt=""><div style="flex:1"><div>${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div><div class="t" style="align-items:center;margin-top:6px"><span class="q"><button data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button class="ib" style="color:var(--no)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h3 style="margin:18px 0 8px;font-size:16px">Delivery details</h3><div class="fm"><input id="nmi" placeholder="Your name" value="${esc(info.name)}"><input id="phi" type="tel" placeholder="Phone number" value="${esc(info.phone)}"><textarea id="adi" rows="3" placeholder="Delivery address">${esc(info.address)}</textarea></div>${user?'':'<p class="mu">Checking out as a guest. <a href="#/login">Log in</a> to save your orders to your account.</p>'}<p class="mu">Your order is saved first, then WhatsApp opens with your order link. Send the message and pay the seller there.</p>`:'<p class="mu">Your cart is empty.</p>'}</div>
+ ${it.length?`<div class="df"><div class="t" style="margin-bottom:10px"><b>Total</b><b>${m(total())}</b></div><button class="w" style="width:100%" data-a="checkout">Checkout and pay on WhatsApp</button></div>`:''}`}
+function grid(){const q=S.toLowerCase(),ps=P.filter(p=>(cat=='All'||p.cat==cat)&&(!q||(p.name+' '+p.cat).toLowerCase().includes(q))).sort((a,b)=>b.createdAt-a.createdAt);
+ return ps.map((p,i)=>`<div class="p" style="animation-delay:${Math.min(i,10)*40}ms"><div class="im"><img loading="lazy" src="${p.img}" alt="${esc(p.name)}">${p.qty>0?`<button class="add" data-a="add" data-id="${p.id}" aria-label="Add ${esc(p.name)} to cart">+</button>`:'<span class="sold">Sold out</span>'}</div><div class="n">${esc(p.name)}</div><div class="pr">${m(p.price)}</div>${p.qty>0&&p.qty<=3?`<div class="low">Only ${p.qty} left</div>`:''}</div>`).join('')||'<p class="mu" style="grid-column:1/-1">No items found.</p>'}
 function shop(){
- const ps=P.filter(p=>cat=='All'||p.cat==cat).sort((a,b)=>b.createdAt-a.createdAt);
- return`<div class=chips>${['All',...C.map(c=>c.name)].map(c=>`<span class="chip ${c==cat?'on':''}" data-a=cat data-id="${esc(c)}">${esc(c)}</span>`).join('')}</div>
- <div class=grid>${ps.map(p=>`<div class=p><img src="${p.img}" alt="${esc(p.name)}"><b>${esc(p.name)}</b><span class=mu>${m(p.price)} · ${p.qty>0?p.qty+' left':'Sold out'}</span><button data-a=add data-id="${p.id}" ${p.qty>0?'':'disabled'}>Add to cart</button></div>`).join('')||'<p class=mu>No products yet.</p>'}</div>`}
-function cartPage(){
- const it=cartItems();if(!it.length)return'<h2>Your cart is empty</h2><a href="#/">Browse clothes</a>';
- return`<h2>Your cart</h2>${it.map(x=>`<div class=row><img src="${x.p.img}"><div><b>${esc(x.p.name)}</b><br><span class=mu>${m(x.p.price)}</span></div><span class=q><button data-a=dec data-id="${x.p.id}">−</button> ${x.q} <button data-a=inc data-id="${x.p.id}">+</button></span><button class=x data-a=rm data-id="${x.p.id}">Remove</button></div>`).join('')}
- <div class=box><div class=t style="width:100%"><b>Total</b><b>${m(total())}</b></div><input id=nmi placeholder="Your name" value="${esc(info.name)}" style="flex:1;min-width:140px"><input id=phi type=tel placeholder="Phone number" value="${esc(info.phone)}" style="flex:1;min-width:140px"><textarea id=adi placeholder="Delivery address" rows=3 style="width:100%">${esc(info.address)}</textarea><button class=w data-a=checkout>Checkout and pay on WhatsApp</button></div>
- <p class=mu>Your order is saved first, then WhatsApp opens with your order link. Send the message and pay the seller there.</p>`}
+ return`<div class="bar"><input id="q" type="search" placeholder="Search clothes" value="${esc(S)}"><div class="tabs">${['All',...C.map(c=>c.name)].map(c=>`<span class="tab ${c==cat?'on':''}" data-a="cat" data-id="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class="grid" id="gr">${grid()}</div>`}
+function loginPage(){
+ if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm">${isSeller()?'<a class="btn" href="#/admin">Open seller dashboard</a>':''}<a class="btn alt" href="#/orders">My orders</a><button class="x" data-a="logout">Log out</button></div></div>`;
+ const up=mode=='up';
+ return`<div class="auth"><h2>${up?'Create account':'Log in'}</h2><div class="fm"><input id="em" type="email" autocomplete="email" placeholder="Email"><input id="pw" type="password" autocomplete="${up?'new-password':'current-password'}" placeholder="Password${up?' (6+ characters)':''}"><button data-a="login">${up?'Create account':'Log in'}</button></div>${up?'':'<button class="lk" data-a="forgot">Forgot password?</button>'}<p class="mu">${up?'Already have an account?':'New here?'} <button class="lk" data-a="mode">${up?'Log in':'Create an account'}</button></p><p class="mu">An account is optional. You can always shop and check out as a guest.</p></div>`}
 function myOrders(){
- const l=ids.map(i=>MY[i]).filter(Boolean).sort((a,b)=>b.createdAt-a.createdAt);
- return`<h2>My orders</h2>${l.map(o=>`<a href="#/order/${o.id}" style="text-decoration:none;color:inherit"><div class=ord><div class=t><b>${new Date(o.createdAt).toLocaleDateString()} · ${m(o.total)}</b><span class="st ${o.status}">${o.status}</span></div><span class=mu>${o.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</span></div></a>`).join('')||'<p class=mu>No orders on this phone yet.</p>'}<p class=mu>Orders are remembered on this phone and browser. If you clear browser data, use the order link from your WhatsApp chat.</p>`}
+ const l=Object.values({...MY,...UO}).sort((a,b)=>b.createdAt-a.createdAt);
+ return`<h2>My orders</h2>${l.map(o=>`<a href="#/order/${o.id}" style="text-decoration:none;color:inherit"><div class="ord"><div class="t"><b>${new Date(o.createdAt).toLocaleDateString()} · ${m(o.total)}</b><span class="st ${o.status}">${o.status}</span></div><span class="mu">${o.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</span></div></a>`).join('')||'<p class="mu">No orders on this phone yet.</p>'}${user?'<p class="mu">Orders placed while logged in are saved to your account.</p>':'<p class="mu">Orders placed as a guest are remembered on this phone only. <a href="#/login">Log in</a> to see them on any device, or use the order link from your WhatsApp chat.</p>'}`}
 const msg={pending:'Waiting for the seller to confirm your payment.',approved:'Payment confirmed. Your order is approved.',rejected:'The seller rejected this order. Please contact them on WhatsApp.'};
 function orderPage(){
- if(OV===null)return'<p class=mu>Loading order…</p>';if(!OV)return'<h2>Order not found</h2>';
- return`<h2>Order status</h2><div class=ord><span class="st ${OV.status}">${OV.status}</span> <p>${msg[OV.status]}</p><p class=mu>Deliver to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
- ${OV.items.map(i=>`<div class=t><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<hr><div class=t><b>Total</b><b>${m(OV.total)}</b></div>
- ${OV.status=='pending'?`<p><button class=w data-a=wa>Send order on WhatsApp</button></p>`:''}</div><p class=mu>Bookmark this page to check your order later.</p>`}
-const ordCard=o=>`<div class=ord><div class=t><b>${esc(o.name)}</b><span class="st ${o.status}">${o.status}</span></div><span class=mu>${new Date(o.createdAt).toLocaleString()}</span><br><span class=mu>${esc(o.phone)} · ${esc(o.address)}</span>
- ${o.items.map(i=>`<div class=t><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<div class=t><b>Total</b><b>${m(o.total)}</b></div>
- ${o.status=='pending'?`<p><button data-a=approve data-id="${o.id}">Approve</button> <button class=x data-a=reject data-id="${o.id}">Reject</button></p>`:''}</div>`;
+ if(OV===null)return'<p class="mu">Loading order…</p>';if(!OV)return'<h2>Order not found</h2>';
+ return`<h2>Order status</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span> <p>${msg[OV.status]}</p><p class="mu">Deliver to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
+ ${OV.items.map(i=>`<div class="t"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<hr><div class="t"><b>Total</b><b>${m(OV.total)}</b></div>
+ ${OV.status=='pending'?`<p><button class="w" data-a="wa">Send order on WhatsApp</button></p>`:''}</div><p class="mu">Bookmark this page to check your order later. <a href="#/">Continue shopping</a></p>`}
+const ordCard=o=>`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span class="st ${o.status}">${o.status}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
+ ${o.items.map(i=>`<div class="t"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<div class="t"><b>Total</b><b>${m(o.total)}</b></div>
+ ${o.status=='pending'?`<p><button data-a="approve" data-id="${o.id}">Approve</button> <button class="x" data-a="reject" data-id="${o.id}">Reject</button></p>`:''}</div>`;
 function admin(){
- if(!user)return`<div class=box><h2 style="margin:0;width:100%">Seller login</h2><input id=em placeholder=Email><input id=pw type=password placeholder=Password><button data-a=login>Log in</button></div>`;
- return`<div class=t><h2>Orders (${O.filter(o=>o.status=='pending').length} pending)</h2><button class=x data-a=logout>Log out</button></div>${O.map(ordCard).join('')||'<p class=mu>No orders yet.</p>'}
- <h2>Add product</h2><div class=box><input id=pn placeholder=Name><select id=pc>${C.map(c=>`<option>${esc(c.name)}</option>`).join('')}</select><input id=pp type=number min=0 step=.01 placeholder=Price><input id=pq type=number min=0 placeholder=Quantity><input id=pi type=file accept="image/*"><button data-a=addp>Add product</button></div>
- <h2>Categories</h2><div class=box><input id=cn placeholder="New category"><button data-a=addc>Add category</button><div class=chips>${C.map(c=>`<span class=chip>${esc(c.name)} <b data-a=delc data-id="${c.id}">×</b></span>`).join('')}</div></div>
- <h2>Products</h2>${P.map(p=>`<div class=row><img src="${p.img}"><div><b>${esc(p.name)}</b><br><span class=mu>${esc(p.cat)}</span></div><input id="pr${p.id}" type=number step=.01 value="${p.price}"><input id="qt${p.id}" type=number value="${p.qty}"><button data-a=upd data-id="${p.id}">Save</button><button class=x data-a=delp data-id="${p.id}">Delete</button></div>`).join('')}`}
+ if(!user)return loginPage();
+ if(!isSeller())return'<h2>Seller area</h2><p class="mu">You are signed in as '+esc(user.email)+', which is not the seller account.</p><button class="x" data-a="logout">Log out</button>';
+ return`<div class="t"><h2>Orders (${O.filter(o=>o.status=='pending').length} pending)</h2><button class="x" data-a="logout">Log out</button></div>${O.map(ordCard).join('')||'<p class="mu">No orders yet.</p>'}
+ <h2>Add product</h2><div class="box"><input id="pn" placeholder="Name"><select id="pc">${C.map(c=>`<option>${esc(c.name)}</option>`).join('')}</select><input id="pp" type="number" min="0" step=".01" placeholder="Price"><input id="pq" type="number" min="0" placeholder="Quantity"><input id="pi" type="file" accept="image/*"><button data-a="addp">Add product</button></div>
+ <h2>Categories</h2><div class="box"><input id="cn" placeholder="New category"><button data-a="addc">Add category</button><div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div></div>
+ <h2>Products</h2>${P.map(p=>`<div class="row"><img src="${p.img}" alt=""><div><b>${esc(p.name)}</b><br><span class="mu">${esc(p.cat)}</span></div><input id="pr${p.id}" type="number" step=".01" value="${p.price}"><input id="qt${p.id}" type="number" value="${p.qty}"><button data-a="upd" data-id="${p.id}">Save</button><button class="x" data-a="delp" data-id="${p.id}">Delete</button></div>`).join('')}`}
 
 const img=f=>new Promise(r=>{const i=new Image;i.onload=()=>{const s=Math.min(1,700/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.7))};i.src=URL.createObjectURL(f)});
 const v=id=>$('#'+id).value.trim();
@@ -113,16 +155,20 @@ async function setStatus(o,s){
   if(s=='approved')for(const i of o.items){const r=doc(db,'products',i.id),d=await t.get(r);if(!d.exists())continue;if(d.data().qty<i.qty)throw Error('Not enough stock for '+i.name);ps.push([r,d.data().qty-i.qty])}
   ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),{status:s})})}catch(e){alert(e.message)}}
 const act={
+ cart:()=>{renderCart();document.body.classList.add('op')},close:()=>document.body.classList.remove('op'),
  cat:id=>{cat=id;render()},
- add:id=>{const p=P.find(x=>x.id==id);cart[id]=Math.min((cart[id]||0)+1,p.qty);save();render()},
- inc:id=>act.add(id),dec:id=>{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id];save();render()},
- rm:id=>{delete cart[id];save();render()},
+ add:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)>=p.qty)return toast('No more stock for this item');cart[id]=(cart[id]||0)+1;save();renderCart();toast('Added to cart: '+p.name)},
+ inc:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)<p.qty){cart[id]++;save();renderCart()}},
+ dec:id=>{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id];save();renderCart()},
+ rm:id=>{delete cart[id];save();renderCart()},
  checkout:async b=>{const name=v('nmi'),phone=v('phi'),address=v('adi');if(!name||!phone||!address)return alert('Please enter your name, phone number and delivery address.');b.disabled=true;
   const items=cartItems().map(x=>({id:x.p.id,name:x.p.name,price:x.p.price,qty:x.q}));
-  try{const o={name,phone,address,items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
-   ids.push(r.id);info={name,phone,address};cart={};save();keep();watch(r.id);location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
+  try{const o={name,phone,address,...(user?{uid:user.uid}:{}),items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
+   ids.push(r.id);info={name,phone,address};cart={};save();keep();watch(r.id);act.close();location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
  wa:()=>location.href=waUrl(OV),
- login:()=>signInWithEmailAndPassword(auth,v('em'),$('#pw').value).catch(e=>alert('Login failed: '+e.code)),
+ login:async()=>{try{const c=await(mode=='in'?signInWithEmailAndPassword:createUserWithEmailAndPassword)(auth,v('em'),$('#pw').value);location.hash=sel(c.user.email)?'/admin':'/'}catch(e){alert(ae(e))}},
+ mode:()=>{mode=mode=='in'?'up':'in';render()},
+ forgot:async()=>{const e=v('em');if(!e)return alert('Type your email first.');try{await sendPasswordResetEmail(auth,e);alert('Password reset email sent. Check your inbox.')}catch(x){alert(ae(x))}},
  logout:()=>signOut(auth),
  approve:id=>setStatus(O.find(o=>o.id==id),'approved'),reject:id=>setStatus(O.find(o=>o.id==id),'rejected'),
  addc:async()=>{const n=v('cn');if(n)await addDoc(collection(db,'categories'),{name:n})},
@@ -131,5 +177,10 @@ const act={
   b.disabled=true;await addDoc(collection(db,'products'),{name:v('pn'),cat:v('pc'),price:+v('pp'),qty:+v('pq'),img:await img(f),createdAt:Date.now()})},
  upd:id=>updateDoc(doc(db,'products',id),{price:+v('pr'+id),qty:+v('qt'+id)}).then(()=>alert('Saved')),
  delp:id=>confirm('Delete this product?')&&deleteDoc(doc(db,'products',id))};
-app.onclick=e=>{const b=e.target.closest('[data-a]');if(b)act[b.dataset.a](b.dataset.id||b,b)};
+document.onclick=e=>{const b=e.target.closest('[data-a]');if(b)act[b.dataset.a](b.dataset.id||b,b)};
+document.oninput=e=>{const t=e.target;
+ if(t.id=='q'){S=t.value;$('#gr').innerHTML=grid()}
+ else if(t.id=='nmi'||t.id=='phi'||t.id=='adi'){info[{nmi:'name',phi:'phone',adi:'address'}[t.id]]=t.value;keep()}};
+addEventListener('keydown',e=>e.key=='Escape'&&act.close());
+dispatchEvent(new Event('hashchange'));
 </script></body></html>
