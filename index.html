@@ -5,14 +5,15 @@
 <title>Zabeda Apparel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--fg:#181818;--mu:#73706c;--ac:#181818;--bd:#e8e3dd;--sf:#f5f1ec;--ok:#1f7a4d;--no:#b3392f;--wa:#1faa59}
+:root{--bg:#fff;--fg:#181818;--mu:#73706c;--ac:#181818;--bd:#e8e3dd;--sf:#f5f1ec;--ok:#1f7a4d;--no:#b3392f;--wa:#1faa59;--prep:#b45309;--ship:#1d4ed8}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.01em}body.op{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.01em}body.op,body.mop{overflow:hidden}
 a{color:var(--fg)}.mu{color:var(--mu);font-size:13px}h2{font-size:15px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin:32px 0 14px}
 button,input,select,textarea{font:inherit;font-size:14px;padding:12px 14px;border:1px solid var(--bd);background:#fff;color:var(--fg);border-radius:0;min-height:44px}
-button{background:var(--fg);color:#fff;border:1px solid var(--fg);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:12px}
-button:disabled{opacity:.35;cursor:not-allowed}button.x{background:#fff;color:var(--no);border-color:var(--no)}button.w{background:var(--wa);border-color:var(--wa)}
-button.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}
+button{background:var(--fg);color:#fff;border:1px solid var(--fg);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:12px;transition:opacity .2s,background .2s,color .2s}
+button:hover:not(:disabled){opacity:.88}
+button:disabled{opacity:.35;cursor:not-allowed}button.x{background:#fff;color:var(--no);border-color:var(--no)}button.x:hover{background:var(--no);color:#fff}button.w{background:var(--wa);border-color:var(--wa)}
+button.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}button.alt:hover{background:var(--fg);color:#fff}
 textarea{resize:vertical;width:100%}:focus-visible{outline:1px solid var(--fg);outline-offset:2px}
 .promo{background:var(--sf);color:var(--fg);border-bottom:1px solid var(--bd);text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;font-weight:500}
 header{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
@@ -63,26 +64,39 @@ main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
 .pdp-desc{font-size:14px;line-height:1.75;color:#333;white-space:pre-line;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:18px 0;margin:4px 0}
 .pdp-acts{display:flex;gap:10px;align-items:stretch}
 .pdp-acts button{flex:1;height:48px}
-/* Cart Drawer */
-#ov{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}body.op #ov{opacity:1;pointer-events:auto}
+/* Cart Drawer & Edit Modal */
+#ov,#mov{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+body.op #ov,body.mop #mov{opacity:1;pointer-events:auto}#mov{z-index:55}
 #dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:50;transform:translateX(100%);transition:transform .32s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}body.op #dr{transform:none}
+#md{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);width:min(540px,92vw);max-height:88vh;background:#fff;border:1px solid var(--bd);z-index:60;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;display:flex;flex-direction:column}
+body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 .dh{display:flex;justify-content:space-between;align-items:center;padding:12px 12px 12px 20px;border-bottom:1px solid var(--bd);text-transform:uppercase;letter-spacing:.12em;font-size:12px}
-.db{flex:1;overflow-y:auto;padding:8px 20px 20px}.df{padding:16px 20px;border-top:1px solid var(--bd);background:#fff}
+.db{flex:1;overflow-y:auto;padding:12px 20px 20px}.df{padding:16px 20px;border-top:1px solid var(--bd);background:#fff}
 .ci{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)}.ci img{width:68px;height:90px;object-fit:cover;background:var(--sf)}
 .q{display:inline-flex;align-items:center;border:1px solid var(--bd)}.q button{background:none;color:var(--fg);border:0;min-width:34px;min-height:34px;padding:0;font-size:15px}.q span{min-width:24px;text-align:center;font-size:13px}
-.fm{display:grid;gap:10px}.t{display:flex;justify-content:space-between;gap:10px;align-items:center}
-#ts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:90vw}
+.fm{display:grid;gap:10px}.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);font-weight:600;margin-top:4px}
+.t{display:flex;justify-content:space-between;gap:10px;align-items:center}
+#ts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:90vw}
 .toast{background:var(--fg);color:#fff;padding:12px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;animation:f .25s ease both}
 /* Admin & Account */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0 8px}
+.stat{background:var(--sf);border:1px solid var(--bd);padding:14px 16px}.stat b{display:block;font-size:20px;margin-top:2px}
 .box,.row,.ord{background:#fff;border:1px solid var(--bd);padding:16px;margin:12px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.ord{display:block}
-.box>input,.box>select,.box>button,.box>textarea{flex:1 1 180px}.box>textarea{flex-basis:100%}.row img{width:56px;height:72px;object-fit:cover;background:var(--sf)}.row>div{flex:1;min-width:140px}.row input{width:95px}
+.box>input,.box>select,.box>button,.box>textarea{flex:1 1 180px}.box>textarea{flex-basis:100%}.row img{width:56px;height:72px;object-fit:cover;background:var(--sf)}.row>div{flex:1;min-width:150px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;width:100%}.chip{padding:6px 14px;border:1px solid var(--bd);font-size:12px;background:var(--sf);text-transform:uppercase;letter-spacing:.06em}.chip b{cursor:pointer;margin-left:4px}
-.st{display:inline-block;padding:3px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:#fff;background:#9a7b2c}.st.approved{background:var(--ok)}.st.rejected{background:var(--no)}
+.st{display:inline-block;padding:3px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:#fff;background:#9a7b2c}
+.st.preparing{background:var(--prep)}.st.shipped{background:var(--ship)}.st.delivered,.st.approved{background:var(--ok)}.st.rejected{background:var(--no)}
+.st-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ethumbs{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0}
+.ethumb{position:relative;width:68px;height:90px;border:1px solid var(--bd);background:var(--sf)}
+.ethumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ethumb button{position:absolute;top:2px;right:2px;width:22px;height:22px;min-height:0;padding:0;font-size:12px;background:rgba(0,0,0,.78);color:#fff;border:0}
 #ft{border-top:1px solid var(--bd);margin-top:40px;background:var(--sf)}.fi{max-width:1280px;margin:0 auto;padding:28px 24px 36px}.soc{display:flex;flex-wrap:wrap;margin-left:-10px}
 .auth{max-width:380px;margin:0 auto;padding-top:16px}.btn{display:block;text-align:center;background:var(--fg);color:#fff;padding:13px;text-decoration:none;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.1em}.btn.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}
 .lk{background:none;color:var(--fg);border:0;padding:0 4px;min-height:40px;text-decoration:underline;text-transform:none;letter-spacing:0;font-size:13px}[hidden]{display:none!important}#acc{position:relative}.dot{position:absolute;top:10px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--ok)}
 @media(min-width:768px){
   .grid{grid-template-columns:repeat(3,1fr);gap:40px 20px}
+  .stats{grid-template-columns:repeat(4,1fr)}
   .pdp{grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
   .gal{flex-direction:row;align-items:start}
   .thumbs{flex-direction:column;width:76px;max-height:620px;overflow-y:auto}
@@ -90,13 +104,15 @@ main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
   .zoom-box{flex:1}
 }
 @media(min-width:1050px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.logo{font-size:20px;letter-spacing:.1em}header{padding:0 10px 0 14px}main{padding:0 14px 48px}.srch{width:100%}.ib{padding:0 6px;font-size:11px}}
+@media(max-width:600px){.logo{font-size:19px;letter-spacing:.08em}header{padding:0 10px 0 14px}main{padding:0 14px 48px}.srch{width:100%}.ib{padding:0 6px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<div class="promo">New Collection Now Live · Order Easily via WhatsApp</div>
-<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/admin" id="adm" hidden>Admin</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" data-a="cart" aria-label="Open bag">Bag (<span class="badge" id="cb">0</span>)</button></nav></header>
+<div class="promo">Order Easily via WhatsApp</div>
+<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/">Home</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" data-a="cart" aria-label="Open cart">Cart (<span class="badge" id="cb">0</span>)</button></nav></header>
 <main id="app"></main><footer id="ft"></footer>
-<div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping bag"></aside><div id="ts"></div>
+<div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping cart"></aside>
+<div id="mov" data-a="closem"></div><div id="md" role="dialog" aria-modal="true" aria-label="Edit product"></div>
+<div id="ts"></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import{getFirestore,collection,doc,addDoc,updateDoc,deleteDoc,onSnapshot,query,orderBy,where,runTransaction}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -125,7 +141,7 @@ const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const m=n=>CUR+' '+Number(n).toFixed(2);
 const imgs=p=>Array.isArray(p?.imgs)&&p.imgs.length?p.imgs:(p?.img?[p.img]:[]);
-let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',selImg=0,pdpQty=1,unsubO,unsubU,unsubV;
+let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',selImg=0,pdpQty=1,editId=null,editImgs=[],unsubO,unsubU,unsubV;
 const sel=e=>!!e&&e.toLowerCase()==SELLER_EMAIL.toLowerCase(),isSeller=()=>sel(user?.email);
 const ae=e=>({'auth/invalid-credential':'Wrong email or password.','auth/invalid-email':'Please enter a valid email.','auth/email-already-in-use':'This email already has an account. Log in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/missing-password':'Please enter a password.','auth/too-many-requests':'Too many attempts. Try again later.'}[e.code]||'Something went wrong ('+e.code+').');
 try{cart=JSON.parse(localStorage.cart||'{}')}catch{}
@@ -146,7 +162,7 @@ onAuthStateChanged(auth,u=>{user=u;unsubO&&unsubO();unsubU&&unsubU();unsubO=unsu
  if(isSeller())unsubO=onSnapshot(query(collection(db,'orders'),orderBy('createdAt','desc')),s=>{O=list(s);render(1)});
  if(u)unsubU=onSnapshot(query(collection(db,'orders'),where('uid','==',u.uid)),s=>{UO=Object.fromEntries(list(s).map(o=>[o.id,o]));render(1)},()=>{});
  render()});
-addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;selImg=0;pdpQty=1;const h=location.hash;document.body.classList.remove('op');scrollTo(0,0);
+addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;selImg=0;pdpQty=1;const h=location.hash;document.body.classList.remove('op','mop');scrollTo(0,0);
  if(h.startsWith('#/order/'))unsubV=onSnapshot(doc(db,'orders',h.slice(8)),d=>{OV=d.exists()?{id:d.id,...d.data()}:0;render(1)},()=>{OV=0;render(1)});
  render()});
 
@@ -164,26 +180,26 @@ function render(bg){
  app.innerHTML=h=='/admin'?admin():h=='/login'?loginPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():h.startsWith('/product/')?productPage(h.slice(9)):shop();
  renderCart();
 }
-function renderCart(){$('#cb').textContent=cartItems().reduce((s,x)=>s+x.q,0);$('#dr').innerHTML=drawer();$('#adm').hidden=!isSeller();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
+function renderCart(){$('#cb').textContent=cartItems().reduce((s,x)=>s+x.q,0);$('#dr').innerHTML=drawer();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
 function drawer(){const it=cartItems();
- return`<div class="dh"><b>Shopping Bag (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" data-a="close" aria-label="Close bag">✕</button></div>
- <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${imgs(x.p)[0]||''}" alt=""><div style="flex:1"><div style="font-weight:500">${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div><div class="t" style="margin-top:8px"><span class="q"><button data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button class="lk" style="color:var(--mu)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h2>Delivery Details</h2><div class="fm"><input id="nmi" placeholder="Full Name" value="${esc(info.name)}"><input id="phi" type="tel" placeholder="Phone Number" value="${esc(info.phone)}"><textarea id="adi" rows="3" placeholder="Delivery Address">${esc(info.address)}</textarea></div>${user?'':'<p class="mu">Checking out as guest. <a href="#/login">Sign in</a> to save orders to your account.</p>'}<p class="mu">Your order is recorded first, then WhatsApp opens so you can complete payment directly with the boutique.</p>`:'<p class="mu" style="padding-top:24px">Your shopping bag is currently empty.</p>'}</div>
+ return`<div class="dh"><b>Shopping Cart (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" data-a="close" aria-label="Close cart">✕</button></div>
+ <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${imgs(x.p)[0]||''}" alt=""><div style="flex:1"><div style="font-weight:500">${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div><div class="t" style="margin-top:8px"><span class="q"><button data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button class="lk" style="color:var(--mu)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h2>Delivery Details</h2><div class="fm"><input id="nmi" placeholder="Full Name" value="${esc(info.name)}"><input id="phi" type="tel" placeholder="Phone Number" value="${esc(info.phone)}"><textarea id="adi" rows="3" placeholder="Delivery Address">${esc(info.address)}</textarea></div>${user?'':'<p class="mu">Checking out as guest. <a href="#/login">Sign in</a> to save orders to your account.</p>'}<p class="mu">Your order is recorded first, then WhatsApp opens so you can complete payment directly with us.</p>`:'<p class="mu" style="padding-top:24px">Your cart is currently empty.</p>'}</div>
  ${it.length?`<div class="df"><div class="t" style="margin-bottom:12px"><span style="text-transform:uppercase;letter-spacing:.1em;font-size:12px">Subtotal</span><b>${m(total())}</b></div><button class="w" style="width:100%" data-a="checkout">Proceed to WhatsApp Checkout</button></div>`:''}`}
 
 function grid(){const q=S.toLowerCase(),ps=P.filter(p=>(cat=='All'||p.cat==cat)&&(!q||(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q))).sort((a,b)=>b.createdAt-a.createdAt);
  return ps.map((p,i)=>{const ph=imgs(p);
-  return`<div class="p" data-a="view" data-id="${p.id}" style="animation-delay:${Math.min(i,10)*35}ms"><div class="im"><img loading="lazy" src="${ph[0]||''}" alt="${esc(p.name)}">${ph[1]?`<img class="alt-img" loading="lazy" src="${ph[1]}" alt="">`:''}${p.qty>0?`<button class="qadd" data-a="add" data-id="${p.id}">+ Quick Add</button>`:'<span class="sold">Sold Out</span>'}</div><div class="meta"><div class="n">${esc(p.name)}</div><div class="pr">${m(p.price)}</div>${p.qty>0&&p.qty<=3?`<div class="low">Only ${p.qty} left</div>`:''}</div></div>`}).join('')||'<p class="mu" style="grid-column:1/-1;padding:32px 0">No pieces match your search.</p>'}
+  return`<div class="p" data-a="view" data-id="${p.id}" style="animation-delay:${Math.min(i,10)*35}ms"><div class="im"><img loading="lazy" src="${ph[0]||''}" alt="${esc(p.name)}">${ph[1]?`<img class="alt-img" loading="lazy" src="${ph[1]}" alt="">`:''}${p.qty>0?`<button class="qadd" data-a="add" data-id="${p.id}">+ Quick Add</button>`:'<span class="sold">Sold Out</span>'}</div><div class="meta"><div class="n">${esc(p.name)}</div><div class="pr">${m(p.price)}</div>${p.qty>0&&p.qty<=3?`<div class="low">Only ${p.qty} left</div>`:''}</div></div>`}).join('')||'<p class="mu" style="grid-column:1/-1;padding:32px 0">No items match your search.</p>'}
 
 function shop(){
  return`<div class="bar"><div class="tabs">${['All',...C.map(c=>c.name)].map(c=>`<span class="tab ${c==cat?'on':''}" data-a="cat" data-id="${esc(c)}">${esc(c)}</span>`).join('')}</div><div class="srch"><input id="q" type="search" placeholder="Search collection…" value="${esc(S)}"></div></div><div class="grid" id="gr">${grid()}</div>`}
 
 function productPage(id){
  const p=P.find(x=>x.id==id);
- if(!P.length)return'<p class="mu" style="padding-top:32px">Loading piece…</p>';
- if(!p)return'<h2>Item not found</h2><p><a href="#/">Return to collection</a></p>';
+ if(!P.length)return'<p class="mu" style="padding-top:32px">Loading item…</p>';
+ if(!p)return'<h2>Item not found</h2><p><a href="#/">Return to Home</a></p>';
  const ph=imgs(p),cur=ph[selImg]||ph[0]||'',maxQ=Math.max(1,p.qty);
  if(pdpQty>maxQ)pdpQty=maxQ;
- return`<a class="back" href="#/">← Back to Collection</a>
+ return`<a class="back" href="#/">← Back to Home</a>
  <div class="pdp">
    <div class="gal">
      ${ph.length>1?`<div class="thumbs">${ph.map((u,i)=>`<img src="${u}" class="${i===selImg?'on':''}" data-a="pic" data-id="${i}" alt="View ${i+1}">`).join('')}</div>`:''}
@@ -200,7 +216,7 @@ function productPage(id){
      <div class="pdp-desc">${p.desc?esc(p.desc):'Crafted with refined attention to detail and effortless everyday elegance.'}</div>
      ${p.qty>0?`<div class="pdp-acts">
        <span class="q"><button data-a="pdec" aria-label="Decrease">−</button><span>${pdpQty}</span><button data-a="pinc" data-id="${p.qty}" aria-label="Increase">+</button></span>
-       <button data-a="addpdp" data-id="${p.id}">Add to Bag — ${m(p.price*pdpQty)}</button>
+       <button data-a="addpdp" data-id="${p.id}">Add to Cart — ${m(p.price*pdpQty)}</button>
      </div>`:'<button disabled style="width:100%;height:48px">Sold Out</button>'}
    </div>
  </div>`;
@@ -209,27 +225,50 @@ function productPage(id){
 function loginPage(){
  if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm">${isSeller()?'<a class="btn" href="#/admin">Open Seller Dashboard</a>':''}<a class="btn alt" href="#/orders">My Orders</a><button class="x" data-a="logout">Sign Out</button></div></div>`;
  const up=mode=='up';
- return`<div class="auth"><h2>${up?'Create Account':'Sign In'}</h2><div class="fm"><input id="em" type="email" autocomplete="email" placeholder="Email Address"><input id="pw" type="password" autocomplete="${up?'new-password':'current-password'}" placeholder="Password${up?' (6+ characters)':''}"><button data-a="login">${up?'Create Account':'Sign In'}</button></div>${up?'':'<button class="lk" data-a="forgot">Forgot password?</button>'}<p class="mu">${up?'Already have an account?':'New client?'} <button class="lk" data-a="mode">${up?'Sign in':'Create an account'}</button></p><p class="mu">Guest checkout is always available without an account.</p></div>`}
+ return`<div class="auth"><h2>${up?'Create Account':'Sign In'}</h2><div class="fm"><input id="em" type="email" autocomplete="email" placeholder="Email Address"><input id="pw" type="password" autocomplete="${up?'new-password':'current-password'}" placeholder="Password${up?' (6+ characters)':''}"><button data-a="login">${up?'Create Account':'Sign In'}</button></div>${up?'':'<button class="lk" data-a="forgot">Forgot password?</button>'}<p class="mu">${up?'Already have an account?':'New customer?'} <button class="lk" data-a="mode">${up?'Sign in':'Create an account'}</button></p><p class="mu">Guest checkout is always available without an account.</p></div>`}
 
 function myOrders(){
  const l=Object.values({...MY,...UO}).sort((a,b)=>b.createdAt-a.createdAt);
  return`<h2>Order History</h2>${l.map(o=>`<a href="#/order/${o.id}" style="text-decoration:none;color:inherit"><div class="ord"><div class="t"><b>${new Date(o.createdAt).toLocaleDateString()} · ${m(o.total)}</b><span class="st ${o.status}">${o.status}</span></div><div class="mu" style="margin-top:6px">${o.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</div></div></a>`).join('')||'<p class="mu">No orders found on this device.</p>'}${user?'<p class="mu">Orders placed while signed in are synced to your account.</p>':'<p class="mu">Guest orders are stored on this browser only. <a href="#/login">Sign in</a> to access them across devices.</p>'}`}
 
-const msg={pending:'Awaiting payment confirmation from our boutique.',approved:'Payment confirmed. Your order is being prepared.',rejected:'This order was declined. Please reach out to us via WhatsApp.'};
+const msg={
+ pending:'Awaiting payment confirmation from our boutique.',
+ preparing:'Payment confirmed! We are currently preparing and packing your order.',
+ approved:'Payment confirmed! We are currently preparing your order.',
+ shipped:'Your parcel has been shipped and is on its way to you.',
+ delivered:'Your order has been delivered. Thank you for shopping with Zabeda Apparel!',
+ rejected:'This order was declined. Please reach out to us via WhatsApp.'
+};
 function orderPage(){
  if(OV===null)return'<p class="mu" style="padding-top:24px">Loading order details…</p>';if(!OV)return'<h2>Order not found</h2>';
- return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span><p style="margin-top:12px">${msg[OV.status]}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
+ return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span><p style="margin-top:12px">${msg[OV.status]||''}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
  ${OV.items.map(i=>`<div class="t" style="padding:4px 0"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<hr style="border:0;border-top:1px solid var(--bd);margin:12px 0"><div class="t"><b>Total</b><b>${m(OV.total)}</b></div>
  ${OV.status=='pending'?`<p style="margin-top:16px"><button class="w" data-a="wa">Complete Payment on WhatsApp</button></p>`:''}</div><p class="mu"><a href="#/">← Continue Shopping</a></p>`}
 
-const ordCard=o=>`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span class="st ${o.status}">${o.status}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
+const ordCard=o=>{
+ const st=o.status=='approved'?'preparing':o.status;
+ return`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span class="st ${st}">${st}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
  <div style="margin:10px 0">${o.items.map(i=>`<div class="t"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}</div><div class="t"><b>Total</b><b>${m(o.total)}</b></div>
- ${o.status=='pending'?`<p style="margin-top:12px"><button data-a="approve" data-id="${o.id}">Approve</button> <button class="x" data-a="reject" data-id="${o.id}">Reject</button></p>`:''}</div>`;
+ <div class="st-btns">
+   ${st=='pending'?`<button data-a="setst" data-id="${o.id}" data-st="preparing">Confirm & Preparing</button> <button class="x" data-a="setst" data-id="${o.id}" data-st="rejected">Reject</button>`:''}
+   ${st=='preparing'?`<button data-a="setst" data-id="${o.id}" data-st="shipped">Mark Shipped</button>`:''}
+   ${st=='shipped'?`<button data-a="setst" data-id="${o.id}" data-st="delivered">Mark Delivered</button>`:''}
+ </div></div>`;
+};
 
 function admin(){
  if(!user)return loginPage();
  if(!isSeller())return'<h2>Restricted Area</h2><p class="mu">Signed in as '+esc(user.email)+', which does not have seller access.</p><button class="x" data-a="logout">Sign Out</button>';
- return`<div class="t"><h2>Orders (${O.filter(o=>o.status=='pending').length} Pending)</h2><button class="x" data-a="logout">Sign Out</button></div>${O.map(ordCard).join('')||'<p class="mu">No orders yet.</p>'}
+ const active=O.filter(o=>['pending','preparing','approved','shipped'].includes(o.status)).length;
+ const rev=O.filter(o=>['preparing','approved','shipped','delivered'].includes(o.status)).reduce((s,o)=>s+Number(o.total||0),0);
+ return`<div class="t"><h2>Seller Dashboard</h2><button class="x" data-a="logout">Sign Out</button></div>
+ <div class="stats">
+   <div class="stat"><span class="mu">Active Orders</span><b>${active}</b></div>
+   <div class="stat"><span class="mu">Total Orders</span><b>${O.length}</b></div>
+   <div class="stat"><span class="mu">Confirmed Sales</span><b>${m(rev)}</b></div>
+   <div class="stat"><span class="mu">Catalog Items</span><b>${P.length}</b></div>
+ </div>
+ <h2>Orders (${O.filter(o=>o.status=='pending').length} Pending)</h2>${O.map(ordCard).join('')||'<p class="mu">No orders yet.</p>'}
  <h2>Add New Product</h2>
  <div class="box">
    <input id="pn" placeholder="Product Name">
@@ -243,21 +282,42 @@ function admin(){
  <h2>Categories</h2><div class="box"><input id="cn" placeholder="New Category Name"><button data-a="addc">Add Category</button><div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div></div>
  <h2>Catalog (${P.length})</h2>${P.map(p=>{const ph=imgs(p);return`<div class="row">
    <img src="${ph[0]||''}" alt="">
-   <div><b>${esc(p.name)}</b> <span class="mu">(${ph.length} photo${ph.length===1?'':'s'})</span><br><span class="mu">${esc(p.cat)}</span></div>
-   <input id="pr${p.id}" type="number" step=".01" value="${p.price}" aria-label="Price">
-   <input id="qt${p.id}" type="number" value="${p.qty}" aria-label="Stock">
-   <label class="ib" style="border:1px solid var(--bd);font-size:11px;cursor:pointer">+ Photos<input type="file" accept="image/*" multiple hidden data-addimg="${p.id}"></label>
-   <button data-a="upd" data-id="${p.id}">Save</button>
+   <div><b>${esc(p.name)}</b> <span class="mu">(${ph.length} photo${ph.length===1?'':'s'})</span><br><span class="mu">${esc(p.cat)} · ${m(p.price)} · Stock: ${p.qty}</span></div>
+   <button class="alt" data-a="edit" data-id="${p.id}">Edit</button>
    <button class="x" data-a="delp" data-id="${p.id}">Delete</button>
  </div>`}).join('')}`}
+
+function renderModal(){
+ const p=P.find(x=>x.id==editId);
+ if(!p){document.body.classList.remove('mop');return}
+ $('#md').innerHTML=`<div class="dh"><b>Edit Product</b><button class="ib" data-a="closem" aria-label="Close">✕</button></div>
+ <div class="db"><div class="fm">
+   <label class="lbl">Product Name</label><input id="epn" value="${esc(p.name)}">
+   <label class="lbl">Category</label><select id="epc">${[...new Set([p.cat,...C.map(c=>c.name)])].filter(Boolean).map(c=>`<option ${c==p.cat?'selected':''}>${esc(c)}</option>`).join('')}</select>
+   <div class="t">
+     <div style="flex:1"><label class="lbl">Price (${CUR})</label><input id="epp" type="number" step=".01" min="0" style="width:100%" value="${p.price}"></div>
+     <div style="flex:1"><label class="lbl">Stock Quantity</label><input id="epq" type="number" min="0" style="width:100%" value="${p.qty}"></div>
+   </div>
+   <label class="lbl">Description</label><textarea id="epd" rows="4" placeholder="Fabric, sizing, care instructions…">${esc(p.desc||'')}</textarea>
+   <label class="lbl">Photos (${editImgs.length}/5)</label>
+   <div class="ethumbs">${editImgs.map((u,i)=>`<div class="ethumb"><img src="${u}" alt=""><button type="button" data-a="rmimg" data-id="${i}" aria-label="Remove photo">✕</button></div>`).join('')}</div>
+   ${editImgs.length<5?`<input id="epi" type="file" accept="image/*" multiple>`:'<span class="mu">Maximum 5 photos reached.</span>'}
+ </div></div>
+ <div class="df"><div class="t"><button class="alt" style="flex:1" data-a="closem">Cancel</button><button style="flex:2" data-a="saveedit">Save Changes</button></div></div>`;
+}
 
 const img=f=>new Promise(r=>{const i=new Image;i.onload=()=>{const s=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.76))};i.src=URL.createObjectURL(f)});
 const v=id=>$('#'+id).value.trim();
 
 async function setStatus(o,s){
+ if(!o)return;
+ const wasDeducted=['preparing','approved','shipped','delivered'].includes(o.status);
+ const willDeduct=['preparing','approved','shipped','delivered'].includes(s);
  try{await runTransaction(db,async t=>{const ps=[];
-  if(s=='approved')for(const i of o.items){const r=doc(db,'products',i.id),d=await t.get(r);if(!d.exists())continue;if(d.data().qty<i.qty)throw Error('Not enough stock for '+i.name);ps.push([r,d.data().qty-i.qty])}
-  ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),{status:s})})}catch(e){alert(e.message)}}
+  if(!wasDeducted&&willDeduct)for(const i of o.items){const r=doc(db,'products',i.id),d=await t.get(r);if(!d.exists())continue;if(d.data().qty<i.qty)throw Error('Not enough stock for '+i.name);ps.push([r,d.data().qty-i.qty])}
+  ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),{status:s})});
+  toast('Order updated to '+s);
+ }catch(e){alert(e.message)}}
 
 const act={
  cart:()=>{renderCart();document.body.classList.add('op')},close:()=>document.body.classList.remove('op'),
@@ -266,8 +326,8 @@ const act={
  pic:i=>{selImg=+i;render()},
  pdec:()=>{if(pdpQty>1){pdpQty--;render()}},
  pinc:max=>{if(pdpQty<+max){pdpQty++;render()}},
- add:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)>=p.qty)return toast('Maximum stock reached');cart[id]=(cart[id]||0)+1;save();renderCart();toast('Added to bag: '+p.name)},
- addpdp:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)+pdpQty>p.qty)return toast('Not enough stock available');cart[id]=(cart[id]||0)+pdpQty;save();renderCart();toast(`Added ${pdpQty} × ${p.name} to bag`)},
+ add:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)>=p.qty)return toast('Maximum stock reached');cart[id]=(cart[id]||0)+1;save();renderCart();toast('Added to cart: '+p.name)},
+ addpdp:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)+pdpQty>p.qty)return toast('Not enough stock available');cart[id]=(cart[id]||0)+pdpQty;save();renderCart();toast(`Added ${pdpQty} × ${p.name} to cart`)},
  inc:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)<p.qty){cart[id]++;save();renderCart()}},
  dec:id=>{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id];save();renderCart()},
  rm:id=>{delete cart[id];save();renderCart()},
@@ -280,7 +340,7 @@ const act={
  mode:()=>{mode=mode=='in'?'up':'in';render()},
  forgot:async()=>{const e=v('em');if(!e)return alert('Enter your email address first.');try{await sendPasswordResetEmail(auth,e);alert('Password reset email sent. Check your inbox.')}catch(x){alert(ae(x))}},
  logout:()=>signOut(auth),
- approve:id=>setStatus(O.find(o=>o.id==id),'approved'),reject:id=>setStatus(O.find(o=>o.id==id),'rejected'),
+ setst:(id,b)=>setStatus(O.find(o=>o.id==id),b.dataset.st),
  addc:async()=>{const n=v('cn');if(n)await addDoc(collection(db,'categories'),{name:n})},
  delc:id=>confirm('Delete this category? Products will keep their label.')&&deleteDoc(doc(db,'categories',id)),
  addp:async b=>{const files=[...$('#pi').files];if(!v('pn')||v('pp')===''||v('pq')===''||!files.length||!v('pc'))return alert('Fill in the name, category, price, quantity, and choose at least one image.');
@@ -289,7 +349,15 @@ const act={
    await addDoc(collection(db,'products'),{name:v('pn'),cat:v('pc'),price:+v('pp'),qty:+v('pq'),desc:v('pd'),img:encoded[0],imgs:encoded,createdAt:Date.now()});
    toast('Product published');
   }catch(e){alert('Upload failed (try fewer or smaller photos): '+e.message);b.disabled=false}},
- upd:id=>updateDoc(doc(db,'products',id),{price:+v('pr'+id),qty:+v('qt'+id)}).then(()=>toast('Changes saved')),
+ edit:id=>{const p=P.find(x=>x.id==id);if(!p)return;editId=id;editImgs=[...imgs(p)];renderModal();document.body.classList.add('mop')},
+ closem:()=>{editId=null;document.body.classList.remove('mop')},
+ rmimg:i=>{if(editImgs.length<=1)return alert('A product must have at least 1 photo.');editImgs.splice(+i,1);renderModal()},
+ saveedit:async b=>{if(!editId)return;const name=v('epn'),cat=v('epc'),price=v('epp'),qty=v('epq'),desc=v('epd');
+  if(!name||price===''||qty==='')return alert('Name, price, and stock are required.');
+  b.disabled=true;
+  try{await updateDoc(doc(db,'products',editId),{name,cat,price:+price,qty:+qty,desc,img:editImgs[0]||'',imgs:editImgs});
+   act.closem();toast('Product updated');
+  }catch(e){alert('Could not save: '+e.message);b.disabled=false}},
  delp:id=>confirm('Delete this product?')&&deleteDoc(doc(db,'products',id))};
 
 document.onclick=e=>{
@@ -297,14 +365,11 @@ document.onclick=e=>{
  if(b){e.stopPropagation();act[b.dataset.a](b.dataset.id||b,b)}
 };
 document.onchange=async e=>{
- const id=e.target.dataset?.addimg;
- if(!id||!e.target.files.length)return;
- const p=P.find(x=>x.id==id),cur=imgs(p);
- const extra=await Promise.all([...e.target.files].slice(0,5-cur.length).map(img));
- if(!extra.length)return alert('Maximum 5 photos per product.');
- const next=[...cur,...extra];
- await updateDoc(doc(db,'products',id),{img:next[0],imgs:next});
- toast('Added '+extra.length+' photo(s)');
+ if(e.target.id=='epi'&&e.target.files.length){
+  const extra=await Promise.all([...e.target.files].slice(0,5-editImgs.length).map(img));
+  editImgs=[...editImgs,...extra];
+  renderModal();
+ }
 };
 document.oninput=e=>{const t=e.target;
  if(t.id=='q'){S=t.value;$('#gr').innerHTML=grid()}
@@ -328,6 +393,6 @@ document.addEventListener('mouseout',e=>{
  }
 });
 
-addEventListener('keydown',e=>e.key=='Escape'&&act.close());
+addEventListener('keydown',e=>{if(e.key=='Escape'){act.close();act.closem()}});
 dispatchEvent(new Event('hashchange'));
 </script></body></html>
