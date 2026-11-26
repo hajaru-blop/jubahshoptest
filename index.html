@@ -123,7 +123,7 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
   .ib::after{left:6px;right:6px}
   main{padding:0 14px 48px}
   .srch{width:100%}
-  .db input[type="text"],.db input[type="tel"],.db input:not([type]),.db textarea,.db select{font-size:16px}
+  .db input[type="text"],.db input[type="email"],.db input[type="tel"],.db input:not([type]),.db textarea,.db select{font-size:16px}
   .df button{min-height:48px}
 }
 @media print{
@@ -157,6 +157,12 @@ const WA="601131050597";                  // seller WhatsApp number, country cod
 const SHOP="Zabeda Apparel";              // shop name
 const CUR="RM";                           // currency
 const SELLER_EMAILS=["hajadfghjk@gmail.com"]; // add a 2nd email like ["hajadfghjk@gmail.com","admin2@gmail.com"]
+
+/* Optional: Free EmailJS keys (emailjs.com) to auto-email receipts when an order is confirmed */
+const EJS_PUBLIC_KEY="";                  // e.g. "user_xxxxxxxxxxxxx"
+const EJS_SERVICE_ID="";                  // e.g. "service_xxxxxxx"
+const EJS_TEMPLATE_ID="";                 // e.g. "template_xxxxxxx"
+
 const IG="https://instagram.com/yourshop"; // leave "" to hide
 const TT="https://tiktok.com/@yourshop";   // leave "" to hide
 const FB="https://facebook.com/yourshop";  // leave "" to hide
@@ -167,7 +173,6 @@ const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const m=n=>CUR+' '+Number(n).toFixed(2);
 const imgs=p=>Array.isArray(p?.imgs)&&p.imgs.length?p.imgs:(p?.img?[p.img]:[]);
-const cleanPhone=p=>{let d=String(p||'').replace(/\D/g,'');if(d.startsWith('0'))d='60'+d.slice(1);return d};
 let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',selImg=0,pdpQty=1,editId=null,editImgs=[],unsubO,unsubU,unsubV;
 const sel=e=>!!e&&SELLER_EMAILS.map(x=>x.toLowerCase()).includes(e.toLowerCase()),isSeller=()=>sel(user?.email);
 const ae=e=>({'auth/invalid-credential':'Wrong email or password.','auth/invalid-email':'Please enter a valid email.','auth/email-already-in-use':'This email already has an account. Log in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/missing-password':'Please enter a password.','auth/too-many-requests':'Too many attempts. Try again later.'}[e.code]||'Something went wrong ('+e.code+').');
@@ -196,12 +201,37 @@ addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;selImg=0;pd
 const cartItems=()=>Object.entries(cart).map(([id,q])=>({p:P.find(x=>x.id==id),q})).filter(x=>x.p&&x.p.qty>0).map(x=>({...x,q:Math.min(x.q,x.p.qty)}));
 const total=()=>cartItems().reduce((s,x)=>s+x.p.price*x.q,0);
 const waUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
- const t=`Hi ${SHOP}, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}${o.receipt?'\nReceipt Requested: Yes':''}\nOrder link: ${link}`;
+ const t=`Hi ${SHOP}, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}${o.receipt?`\nReceipt Requested: Yes (${o.receiptEmail||''})`:''}\nOrder link: ${link}`;
  return`https://wa.me/${WA}?text=${encodeURIComponent(t)}`};
-const custReceiptWaUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
- const t=`Hi ${o.name}, thank you for shopping with ${SHOP}! Your payment has been received and your order is now being prepared.\n\nOFFICIAL RECEIPT\nOrder ID: #${o.id.slice(0,8).toUpperCase()}\n`+o.items.map(i=>`- ${i.name} x${i.qty} (${m(i.price*i.qty)})`).join('\n')+`\nTotal Paid: ${m(o.total)}\nView/Print Official Receipt: ${link}`;
- return`https://wa.me/${cleanPhone(o.phone)}?text=${encodeURIComponent(t)}`};
-const toast=t=>{const d=document.createElement('div');d.className='toast';d.textContent=t;$('#ts').append(d);setTimeout(()=>d.remove(),2000)};
+const receiptMailto=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
+ const sub=`Official Receipt — ${SHOP} (Order #${o.id.slice(0,8).toUpperCase()})`;
+ const body=`Hi ${o.name},\n\nThank you for shopping with ${SHOP}! Your payment has been received and your order is now being prepared.\n\nOFFICIAL RECEIPT\nOrder ID: #${o.id.slice(0,8).toUpperCase()}\nDate: ${new Date(o.receiptIssuedAt||Date.now()).toLocaleDateString()}\n\nItems:\n`+o.items.map(i=>`- ${i.name} x${i.qty} (${m(i.price*i.qty)})`).join('\n')+`\n\nTotal Paid: ${m(o.total)}\n\nView or print your official receipt anytime here:\n${link}\n\nWarm regards,\n${SHOP}`;
+ return`mailto:${encodeURIComponent(o.receiptEmail)}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`};
+
+async function sendAutoReceiptEmail(o){
+ if(!o.receipt||!o.receiptEmail)return false;
+ if(EJS_PUBLIC_KEY&&EJS_SERVICE_ID&&EJS_TEMPLATE_ID){
+  const link=location.origin+location.pathname+'#/order/'+o.id;
+  const itemsText=o.items.map(i=>`${i.name} x${i.qty} - ${m(i.price*i.qty)}`).join('\n');
+  try{
+   const res=await fetch('https://api.emailjs.com/api/v1.0/email/send',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+     service_id:EJS_SERVICE_ID,template_id:EJS_TEMPLATE_ID,user_id:EJS_PUBLIC_KEY,
+     template_params:{
+      to_email:o.receiptEmail,to_name:o.name,shop_name:SHOP,
+      order_id:o.id.slice(0,8).toUpperCase(),
+      order_date:new Date(o.receiptIssuedAt||Date.now()).toLocaleDateString(),
+      items:itemsText,total:m(o.total),receipt_link:link,address:o.address
+     }
+    })
+   });
+   return res.ok;
+  }catch{return false}
+ }
+ return false;
+}
+const toast=t=>{const d=document.createElement('div');d.className='toast';d.textContent=t;$('#ts').append(d);setTimeout(()=>d.remove(),2600)};
 
 function render(bg){
  if(bg&&document.activeElement.id=='q'&&$('#gr')){$('#gr').innerHTML=grid();return}
@@ -218,7 +248,8 @@ function drawer(){const it=cartItems();
    <input id="phi" type="tel" placeholder="Phone Number" value="${esc(info.phone)}">
    <textarea id="adi" rows="3" placeholder="Delivery Address">${esc(info.address)}</textarea>
    ${user?'':`<label class="chk"><input type="checkbox" id="agec" ${info.over18?'checked':''}><span><b>Yes, I am 18 or older</b> <span class="mu">(Required to place an order)</span></span></label>`}
-   <label class="chk"><input type="checkbox" id="rcptc" ${info.receipt?'checked':''}><span><b>Request a receipt</b> <span class="mu">(Optional — automatically issued once order is accepted / payment received)</span></span></label>
+   <label class="chk"><input type="checkbox" id="rcptc" ${info.receipt?'checked':''}><span><b>Request a receipt</b> <span class="mu">(Optional — automatically sent to your email once payment is confirmed)</span></span></label>
+   ${info.receipt?`<input id="emi" type="email" autocomplete="email" placeholder="Email Address for Receipt" value="${esc(user?.email||info.email||'')}">`:''}
  </div>${user?'':'<p class="mu">Checking out as guest. <a href="#/login">Sign in</a> to skip age check and save orders to your account.</p>'}<p class="mu">Your order is recorded first, then WhatsApp opens so you can complete payment directly with us.</p>`:'<p class="mu" style="padding-top:24px">Your cart is currently empty.</p>'}</div>
  ${it.length?`<div class="df"><div class="t" style="margin-bottom:12px"><span style="text-transform:uppercase;letter-spacing:.1em;font-size:12px">Subtotal</span><b>${m(total())}</b></div><button type="button" class="w" style="width:100%" data-a="checkout">Proceed to WhatsApp Checkout</button></div>`:''}`}
 
@@ -287,7 +318,7 @@ function orderPage(){
  if(OV===null)return'<p class="mu" style="padding-top:24px">Loading order details…</p>';if(!OV)return'<h2>Order not found</h2>';
  const isAccepted=['preparing','approved','shipped','delivered'].includes(OV.status);
  const showReceipt=OV.receipt&&isAccepted;
- return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span>${OV.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}<p style="margin-top:12px">${msg[OV.status]||''}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}</p>
+ return`<h2>Order Summary</h2><div class="ord"><span class="st ${OV.status}">${OV.status}</span>${OV.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}<p style="margin-top:12px">${msg[OV.status]||''}</p><p class="mu">Delivery to: ${esc(OV.name)}, ${esc(OV.phone)}, ${esc(OV.address)}${OV.receiptEmail?`<br>Receipt email: ${esc(OV.receiptEmail)}`:''}</p>
  ${OV.items.map(i=>`<div class="t" style="padding:4px 0"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}<hr style="border:0;border-top:1px solid var(--bd);margin:12px 0"><div class="t"><b>Total</b><b>${m(OV.total)}</b></div>
  ${OV.status=='pending'?`<p style="margin-top:16px"><button type="button" class="w" data-a="wa">Complete Payment on WhatsApp</button></p>`:''}
  ${showReceipt?`<div class="receipt-card">
@@ -295,7 +326,7 @@ function orderPage(){
      <div><div class="receipt-brand">${esc(SHOP)}</div><div class="mu">Official Payment Receipt</div></div>
      <div style="text-align:right"><div style="font-weight:600;font-size:12px">RECEIPT #${esc(OV.id.slice(0,8).toUpperCase())}</div><div class="mu">${new Date(OV.receiptIssuedAt||OV.createdAt).toLocaleDateString()}</div></div>
    </div>
-   <div class="mu" style="margin-bottom:10px">Billed to: <b>${esc(OV.name)}</b> · ${esc(OV.phone)}<br>${esc(OV.address)}</div>
+   <div class="mu" style="margin-bottom:10px">Billed to: <b>${esc(OV.name)}</b> · ${esc(OV.phone)}${OV.receiptEmail?' · '+esc(OV.receiptEmail):''}<br>${esc(OV.address)}</div>
    ${OV.items.map(i=>`<div class="t" style="padding:3px 0"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}
    <hr style="border:0;border-top:1px solid var(--bd);margin:10px 0">
    <div class="t"><b>Total Paid</b><b>${m(OV.total)}</b></div>
@@ -305,13 +336,13 @@ function orderPage(){
 const ordCard=o=>{
  const st=o.status=='approved'?'preparing':o.status;
  const isAccepted=['preparing','approved','shipped','delivered'].includes(st);
- return`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span><span class="st ${st}">${st}</span>${o.receipt?`<span class="rcpt">${isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}</span>
+ return`<div class="ord"><div class="t"><b>${esc(o.name)}</b><span><span class="st ${st}">${st}</span>${o.receipt?`<span class="rcpt">${o.receiptSent?'Receipt Sent':isAccepted?'Receipt Issued':'Receipt Requested'}</span>`:''}</span></div><span class="mu">${new Date(o.createdAt).toLocaleString()}</span><br><span class="mu">${esc(o.phone)} · ${esc(o.address)}${o.receiptEmail?` · Email: <b>${esc(o.receiptEmail)}</b>`:''}</span>
  <div style="margin:10px 0">${o.items.map(i=>`<div class="t"><span>${esc(i.name)} × ${i.qty}</span><span>${m(i.price*i.qty)}</span></div>`).join('')}</div><div class="t"><b>Total</b><b>${m(o.total)}</b></div>
  <div class="st-btns">
    ${st=='pending'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="preparing">Confirm & Preparing</button> <button type="button" class="x" data-a="setst" data-id="${o.id}" data-st="rejected">Reject</button>`:''}
    ${st=='preparing'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="shipped">Mark Shipped</button>`:''}
    ${st=='shipped'?`<button type="button" data-a="setst" data-id="${o.id}" data-st="delivered">Mark Delivered</button>`:''}
-   ${o.receipt&&isAccepted?`<a class="btn alt" style="padding:10px 14px;display:inline-block" href="${custReceiptWaUrl(o)}" target="_blank" rel="noopener">Send Receipt via WhatsApp</a>`:''}
+   ${o.receipt&&o.receiptEmail&&isAccepted?`<a class="btn alt" style="padding:10px 14px;display:inline-block" href="${receiptMailto(o)}">Email Receipt</a>`:''}
  </div></div>`;
 };
 
@@ -366,20 +397,22 @@ function renderModal(){
 }
 
 const img=f=>new Promise(r=>{const i=new Image;i.onload=()=>{const s=Math.min(1,900/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.76))};i.src=URL.createObjectURL(f)});
-const v=id=>$('#'+id).value.trim();
+const v=id=>($('#'+id)?.value||'').trim();
 
 async function setStatus(o,s){
  if(!o)return;
  const wasDeducted=['preparing','approved','shipped','delivered'].includes(o.status);
  const willDeduct=['preparing','approved','shipped','delivered'].includes(s);
- const upd={status:s,...(!wasDeducted&&willDeduct&&o.receipt?{receiptIssuedAt:Date.now()}:{})};
+ const issuingReceipt=!wasDeducted&&willDeduct&&o.receipt;
+ const upd={status:s,...(issuingReceipt?{receiptIssuedAt:Date.now()}:{})};
  try{await runTransaction(db,async t=>{const ps=[];
   if(!wasDeducted&&willDeduct)for(const i of o.items){const r=doc(db,'products',i.id),d=await t.get(r);if(!d.exists())continue;if(d.data().qty<i.qty)throw Error('Not enough stock for '+i.name);ps.push([r,d.data().qty-i.qty])}
   ps.forEach(([r,q])=>t.update(r,{qty:q}));t.update(doc(db,'orders',o.id),upd)});
-  toast(!wasDeducted&&willDeduct&&o.receipt?'Order confirmed & receipt issued':'Order updated to '+s);
-  if(!wasDeducted&&willDeduct&&o.receipt&&o.phone){
-   window.open(custReceiptWaUrl({...o,...upd}),'_blank','noopener');
-  }
+  if(issuingReceipt){
+   const sent=await sendAutoReceiptEmail({...o,...upd});
+   if(sent){await updateDoc(doc(db,'orders',o.id),{receiptSent:true});toast('Order confirmed & receipt emailed to '+o.receiptEmail)}
+   else{toast('Order confirmed & digital receipt issued');if(o.receiptEmail&&!EJS_PUBLIC_KEY)location.href=receiptMailto({...o,...upd})}
+  }else{toast('Order updated to '+s)}
  }catch(e){alert(e.message)}}
 
 const act={
@@ -394,13 +427,14 @@ const act={
  inc:id=>{const p=P.find(x=>x.id==id);if((cart[id]||0)<p.qty){cart[id]++;save();renderCart()}},
  dec:id=>{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id];save();renderCart()},
  rm:id=>{delete cart[id];save();renderCart()},
- checkout:async b=>{const name=v('nmi'),phone=v('phi'),address=v('adi'),over18=user?true:!!$('#agec')?.checked,receipt=!!$('#rcptc')?.checked;
+ checkout:async b=>{const name=v('nmi'),phone=v('phi'),address=v('adi'),over18=user?true:!!$('#agec')?.checked,receipt=!!$('#rcptc')?.checked,receiptEmail=receipt?(v('emi')||user?.email||''):'';
   if(!name||!phone||!address)return alert('Please enter your name, phone number and delivery address.');
   if(!over18)return alert('Please confirm that you are 18 or older before placing an order.');
+  if(receipt&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(receiptEmail))return alert('Please enter a valid email address to receive your receipt.');
   b.disabled=true;
   const items=cartItems().map(x=>({id:x.p.id,name:x.p.name,price:x.p.price,qty:x.q}));
-  try{const o={name,phone,address,over18:true,receipt,...(user?{uid:user.uid}:{}),items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
-   ids.push(r.id);info={name,phone,address,over18,receipt};cart={};save();keep();watch(r.id);act.close();location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
+  try{const o={name,phone,address,over18:true,receipt,...(receipt?{receiptEmail}:{}),...(user?{uid:user.uid}:{}),items,total:total(),status:'pending',createdAt:Date.now()},r=await addDoc(collection(db,'orders'),o);
+   ids.push(r.id);info={name,phone,address,over18,receipt,...(receiptEmail?{email:receiptEmail}:{})};cart={};save();keep();watch(r.id);act.close();location.hash='/order/'+r.id;setTimeout(()=>location.href=waUrl({...o,id:r.id}),400)}catch(e){alert('Could not place order: '+e.message);b.disabled=false}},
  wa:()=>location.href=waUrl(OV),
  login:async()=>{if(mode=='up'&&!$('#reg18')?.checked)return alert('Please confirm that you are 18 or older to create an account.');
   try{const c=await(mode=='in'?signInWithEmailAndPassword:createUserWithEmailAndPassword)(auth,v('em'),$('#pw').value);location.hash=sel(c.user.email)?'/admin':'/'}catch(e){alert(ae(e))}},
@@ -437,13 +471,15 @@ document.onchange=async e=>{
   const extra=await Promise.all([...t.files].slice(0,5-editImgs.length).map(img));
   editImgs=[...editImgs,...extra];
   renderModal();
- }else if(t.id=='agec'||t.id=='rcptc'){
-  info[t.id=='agec'?'over18':'receipt']=t.checked;keep();
+ }else if(t.id=='agec'){
+  info.over18=t.checked;keep();
+ }else if(t.id=='rcptc'){
+  info.receipt=t.checked;keep();renderCart();
  }
 };
 document.oninput=e=>{const t=e.target;
  if(t.id=='q'){S=t.value;$('#gr').innerHTML=grid()}
- else if(t.id=='nmi'||t.id=='phi'||t.id=='adi'){info[{nmi:'name',phi:'phone',adi:'address'}[t.id]]=t.value;keep()}};
+ else if(t.id=='nmi'||t.id=='phi'||t.id=='adi'||t.id=='emi'){info[{nmi:'name',phi:'phone',adi:'address',emi:'email'}[t.id]]=t.value;keep()}};
 
 /* Interactive magnifying zoom on product detail image */
 document.addEventListener('mousemove',e=>{
