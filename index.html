@@ -2,28 +2,28 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<title>My Clothing Shop</title>
+<title>Zabeda Apparel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--fg:#111;--mu:#737373;--ac:#111;--bd:#eaeaea;--sf:#f7f7f7;--ok:#1b6e44;--no:#b3392f;--wa:#1faa59}
+:root{--bg:#fff;--fg:#181818;--mu:#73706c;--ac:#181818;--bd:#e8e3dd;--sf:#f5f1ec;--ok:#1f7a4d;--no:#b3392f;--wa:#1faa59}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:.01em}body.op{overflow:hidden}
-a{color:var(--fg)}.mu{color:var(--mu);font-size:13px}h2{font-size:16px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin:32px 0 14px}
+a{color:var(--fg)}.mu{color:var(--mu);font-size:13px}h2{font-size:15px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin:32px 0 14px}
 button,input,select,textarea{font:inherit;font-size:14px;padding:12px 14px;border:1px solid var(--bd);background:#fff;color:var(--fg);border-radius:0;min-height:44px}
 button{background:var(--fg);color:#fff;border:1px solid var(--fg);cursor:pointer;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:12px}
 button:disabled{opacity:.35;cursor:not-allowed}button.x{background:#fff;color:var(--no);border-color:var(--no)}button.w{background:var(--wa);border-color:var(--wa)}
 button.alt{background:#fff;color:var(--fg);border:1px solid var(--fg)}
 textarea{resize:vertical;width:100%}:focus-visible{outline:1px solid var(--fg);outline-offset:2px}
-.promo{background:#111;color:#fff;text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px}
-header{position:sticky;top:0;z-index:20;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.promo{background:var(--sf);color:var(--fg);border-bottom:1px solid var(--bd);text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;font-weight:500}
+header{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 16px 0 24px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:25px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 nav{display:flex;align-items:center;gap:4px}
 .ib{background:none;color:var(--fg);border:0;min-width:40px;min-height:40px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;position:relative}
 .ib::after{content:'';position:absolute;left:10px;right:10px;bottom:8px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
 .ib:hover::after{transform:scaleX(1);transform-origin:left}
 .badge{font-size:11px;font-weight:700}
 main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
-.bar{position:sticky;top:62px;z-index:10;background:#fff;padding:14px 0 0;border-bottom:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.bar{position:sticky;top:64px;z-index:10;background:#fff;padding:14px 0 0;border-bottom:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .tabs{display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
 .tab{position:relative;padding:12px 0;white-space:nowrap;cursor:pointer;color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;transition:color .2s}
 .tab:hover,.tab.on{color:var(--fg)}
@@ -72,7 +72,7 @@ main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
 .q{display:inline-flex;align-items:center;border:1px solid var(--bd)}.q button{background:none;color:var(--fg);border:0;min-width:34px;min-height:34px;padding:0;font-size:15px}.q span{min-width:24px;text-align:center;font-size:13px}
 .fm{display:grid;gap:10px}.t{display:flex;justify-content:space-between;gap:10px;align-items:center}
 #ts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:90vw}
-.toast{background:#111;color:#fff;padding:12px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;animation:f .25s ease both}
+.toast{background:var(--fg);color:#fff;padding:12px 20px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;animation:f .25s ease both}
 /* Admin & Account */
 .box,.row,.ord{background:#fff;border:1px solid var(--bd);padding:16px;margin:12px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}.ord{display:block}
 .box>input,.box>select,.box>button,.box>textarea{flex:1 1 180px}.box>textarea{flex-basis:100%}.row img{width:56px;height:72px;object-fit:cover;background:var(--sf)}.row>div{flex:1;min-width:140px}.row input{width:95px}
@@ -90,10 +90,10 @@ main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
   .zoom-box{flex:1}
 }
 @media(min-width:1050px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.logo{font-size:19px;letter-spacing:.1em}header{padding:0 10px 0 14px}main{padding:0 14px 48px}.srch{width:100%}.ib{padding:0 6px;font-size:11px}}
+@media(max-width:600px){.logo{font-size:20px;letter-spacing:.1em}header{padding:0 10px 0 14px}main{padding:0 14px 48px}.srch{width:100%}.ib{padding:0 6px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<div class="promo">Complimentary Personal Styling via WhatsApp · New Collection Now Live</div>
+<div class="promo">New Collection Now Live · Order Easily via WhatsApp</div>
 <header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/admin" id="adm" hidden>Admin</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" data-a="cart" aria-label="Open bag">Bag (<span class="badge" id="cb">0</span>)</button></nav></header>
 <main id="app"></main><footer id="ft"></footer>
 <div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping bag"></aside><div id="ts"></div>
@@ -112,8 +112,8 @@ const CFG={
     appId: "1:911396290791:web:4c2efd10f795baaab36242",
     measurementId: "G-KBQPL0ZQBX"};
 const WA="601131050597";                  // seller WhatsApp number, country code, no + or spaces
-const SHOP="My Clothing Shop";           // shop name
-const CUR="RM";                          // currency
+const SHOP="Zabeda Apparel";              // shop name
+const CUR="RM";                           // currency
 const SELLER_EMAIL="hajadfghjk@gmail.com"; // the seller login email (must match your Firestore rules)
 const IG="https://instagram.com/yourshop"; // leave "" to hide
 const TT="https://tiktok.com/@yourshop";   // leave "" to hide
@@ -153,7 +153,7 @@ addEventListener('hashchange',()=>{unsubV&&unsubV();unsubV=0;OV=null;selImg=0;pd
 const cartItems=()=>Object.entries(cart).map(([id,q])=>({p:P.find(x=>x.id==id),q})).filter(x=>x.p&&x.p.qty>0).map(x=>({...x,q:Math.min(x.q,x.p.qty)}));
 const total=()=>cartItems().reduce((s,x)=>s+x.p.price*x.q,0);
 const waUrl=(o)=>{const link=location.origin+location.pathname+'#/order/'+o.id;
- const t=`Hi, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}\nOrder link: ${link}`;
+ const t=`Hi ${SHOP}, I'd like to pay for my order.\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\n`+o.items.map(i=>`- ${i.name} x${i.qty}`).join('\n')+`\nTotal: ${m(o.total)}\nOrder link: ${link}`;
  return`https://wa.me/${WA}?text=${encodeURIComponent(t)}`};
 const toast=t=>{const d=document.createElement('div');d.className='toast';d.textContent=t;$('#ts').append(d);setTimeout(()=>d.remove(),2000)};
 
