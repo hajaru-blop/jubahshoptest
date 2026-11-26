@@ -24,7 +24,7 @@ header{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:cen
 nav{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .ib,button.ib{background:none;color:var(--fg);border:0;min-width:40px;min-height:44px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-family:inherit;font-weight:500;font-size:12px;line-height:1;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;cursor:pointer;position:relative;appearance:none}
 .ib::after{content:'';position:absolute;left:10px;right:10px;bottom:10px;height:1px;background:var(--fg);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
-.ib:hover::after{transform:scaleX(1);transform-origin:left}
+.ib:hover::after,.ib.cur::after{transform:scaleX(1);transform-origin:left}
 .badge{font-size:inherit;font-weight:inherit}
 main{max-width:1280px;margin:0 auto;padding:0 24px 64px;min-height:65vh}
 .bar{position:sticky;top:64px;z-index:10;background:#fff;padding:14px 0 0;border-bottom:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
@@ -115,12 +115,12 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
   .zoom-box{flex:1}
 }
 @media(min-width:1050px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:640px){
-  header{padding:0 8px 0 14px}
-  .logo{font-size:16px;letter-spacing:.07em}
+@media(max-width:740px){
+  header{padding:0 6px 0 10px}
+  .logo{font-size:14px;letter-spacing:.05em}
   nav{gap:0}
-  .ib,button.ib{padding:0 6px;font-size:11px;letter-spacing:.06em;min-width:34px}
-  .ib::after{left:6px;right:6px}
+  .ib,button.ib{padding:0 4px;font-size:10px;letter-spacing:.04em;min-width:28px}
+  .ib::after{left:4px;right:4px}
   main{padding:0 14px 48px}
   .srch{width:100%}
   .db input[type="text"],.db input[type="email"],.db input[type="tel"],.db input:not([type]),.db textarea,.db select{font-size:16px}
@@ -134,7 +134,7 @@ body.mop #md{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 <div class="promo">Order Easily via WhatsApp</div>
-<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/">Home</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" type="button" data-a="cart" aria-label="Open cart">Cart <span class="badge" id="cb">(0)</span></button></nav></header>
+<header><a class="logo" href="#/" id="nm"></a><nav><a class="ib" href="#/">Home</a><a class="ib" href="#/admin" id="adm" hidden>Dashboard</a><a class="ib" href="#/products" id="prd" hidden>Products</a><a class="ib" href="#/orders">Orders</a><a class="ib" href="#/login" id="acc" aria-label="Account"></a><button class="ib" type="button" data-a="cart" aria-label="Open cart">Cart <span class="badge" id="cb">(0)</span></button></nav></header>
 <main id="app"></main><footer id="ft"></footer>
 <div id="ov" data-a="close"></div><aside id="dr" aria-label="Shopping cart"></aside>
 <div id="mov" data-a="closem"></div><div id="md" role="dialog" aria-modal="true" aria-label="Edit product"></div>
@@ -173,7 +173,7 @@ const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const m=n=>CUR+' '+Number(n).toFixed(2);
 const imgs=p=>Array.isArray(p?.imgs)&&p.imgs.length?p.imgs:(p?.img?[p.img]:[]);
-let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',cart={},UO={},mode='in',selImg=0,pdpQty=1,editId=null,editImgs=[],unsubO,unsubU,unsubV;
+let P=[],C=[],O=[],OV=null,user=null,cat='All',S='',adminS='',cart={},UO={},mode='in',selImg=0,pdpQty=1,editId=null,editImgs=[],unsubO,unsubU,unsubV;
 const sel=e=>!!e&&SELLER_EMAILS.map(x=>x.toLowerCase()).includes(e.toLowerCase()),isSeller=()=>sel(user?.email);
 const ae=e=>({'auth/invalid-credential':'Wrong email or password.','auth/invalid-email':'Please enter a valid email.','auth/email-already-in-use':'This email already has an account. Log in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/missing-password':'Please enter a password.','auth/too-many-requests':'Too many attempts. Try again later.'}[e.code]||'Something went wrong ('+e.code+').');
 try{cart=JSON.parse(localStorage.cart||'{}')}catch{}
@@ -235,12 +235,14 @@ const toast=t=>{const d=document.createElement('div');d.className='toast';d.text
 
 function render(bg){
  if(bg&&document.activeElement.id=='q'&&$('#gr')){$('#gr').innerHTML=grid();return}
+ if(bg&&document.activeElement.id=='aq'&&$('#catlist')){$('#catlist').innerHTML=adminCatalogList();return}
  if(bg&&/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
  const h=location.hash.slice(1)||'/';
- app.innerHTML=h=='/admin'?admin():h=='/login'?loginPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():h.startsWith('/product/')?productPage(h.slice(9)):shop();
+ app.innerHTML=h=='/admin'?admin():h=='/products'?adminProducts():h=='/login'?loginPage():h=='/orders'?myOrders():h.startsWith('/order/')?orderPage():h.startsWith('/product/')?productPage(h.slice(9)):shop();
  renderCart();
+ document.querySelectorAll('header nav a.ib').forEach(a=>a.classList.toggle('cur',a.getAttribute('href')=='#'+h));
 }
-function renderCart(){$('#cb').textContent='('+cartItems().reduce((s,x)=>s+x.q,0)+')';$('#dr').innerHTML=drawer();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
+function renderCart(){$('#cb').textContent='('+cartItems().reduce((s,x)=>s+x.q,0)+')';$('#dr').innerHTML=drawer();$('#adm').hidden=!isSeller();$('#prd').hidden=!isSeller();$('#acc').innerHTML=ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>')+(user?'<i class="dot"></i>':'')}
 function drawer(){const it=cartItems();
  return`<div class="dh"><b>Shopping Cart (${it.reduce((s,x)=>s+x.q,0)})</b><button class="ib" type="button" data-a="close" aria-label="Close cart">✕</button></div>
  <div class="db">${it.length?it.map(x=>`<div class="ci"><img src="${imgs(x.p)[0]||''}" alt=""><div class="ci-body"><div><div class="ci-name">${esc(x.p.name)}</div><div class="pr">${m(x.p.price)}</div></div><div class="t" style="margin-top:8px"><span class="q"><button type="button" data-a="dec" data-id="${x.p.id}" aria-label="Less">−</button><span>${x.q}</span><button type="button" data-a="inc" data-id="${x.p.id}" aria-label="More">+</button></span><button type="button" class="lk" style="color:var(--mu)" data-a="rm" data-id="${x.p.id}">Remove</button></div></div></div>`).join('')+`<h2>Delivery Details</h2><div class="fm">
@@ -290,7 +292,7 @@ function productPage(id){
 }
 
 function loginPage(){
- if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm">${isSeller()?'<a class="btn" href="#/admin">Open Seller Dashboard</a>':''}<a class="btn alt" href="#/orders">My Orders</a><button type="button" class="x" data-a="logout">Sign Out</button></div></div>`;
+ if(user)return`<div class="auth"><h2>Account</h2><p>Signed in as <b>${esc(user.email)}</b></p><div class="fm"><a class="btn alt" href="#/orders">My Orders</a><button type="button" class="x" data-a="logout">Sign Out</button></div></div>`;
  const up=mode=='up';
  return`<div class="auth"><h2>${up?'Create Account':'Sign In'}</h2><div class="fm">
    <input id="em" type="email" autocomplete="email" placeholder="Email Address">
@@ -351,31 +353,52 @@ function admin(){
  if(!isSeller())return'<h2>Restricted Area</h2><p class="mu">Signed in as '+esc(user.email)+', which does not have seller access.</p><button type="button" class="x" data-a="logout">Sign Out</button>';
  const active=O.filter(o=>['pending','preparing','approved','shipped'].includes(o.status)).length;
  const rev=O.filter(o=>['preparing','approved','shipped','delivered'].includes(o.status)).reduce((s,o)=>s+Number(o.total||0),0);
- return`<div class="t"><h2>Seller Dashboard</h2><button type="button" class="x" data-a="logout">Sign Out</button></div>
+ return`<div class="t"><h2>Seller Dashboard</h2><a class="btn alt" style="padding:10px 16px" href="#/products">+ Manage Products</a></div>
  <div class="stats">
    <div class="stat"><span class="mu">Active Orders</span><b>${active}</b></div>
    <div class="stat"><span class="mu">Total Orders</span><b>${O.length}</b></div>
    <div class="stat"><span class="mu">Confirmed Sales</span><b>${m(rev)}</b></div>
    <div class="stat"><span class="mu">Catalog Items</span><b>${P.length}</b></div>
  </div>
- <h2>Orders (${O.filter(o=>o.status=='pending').length} Pending)</h2>${O.map(ordCard).join('')||'<p class="mu">No orders yet.</p>'}
+ <h2>Orders (${O.filter(o=>o.status=='pending').length} Pending)</h2>${O.map(ordCard).join('')||'<p class="mu">No orders yet.</p>'}`}
+
+function adminCatalogList(){
+ const q=adminS.toLowerCase();
+ const listP=P.filter(p=>!q||(p.name+' '+p.cat+' '+(p.desc||'')).toLowerCase().includes(q)).sort((a,b)=>b.createdAt-a.createdAt);
+ return listP.map(p=>{const ph=imgs(p);return`<div class="row">
+   <img src="${ph[0]||''}" alt="">
+   <div><b>${esc(p.name)}</b> <span class="mu">(${ph.length} photo${ph.length===1?'':'s'})</span><br><span class="mu">${esc(p.cat)} · ${m(p.price)} · Stock: ${p.qty}</span></div>
+   <button type="button" class="alt" data-a="edit" data-id="${p.id}">Edit</button>
+   <button type="button" class="x" data-a="delp" data-id="${p.id}">Delete</button>
+ </div>`}).join('')||'<p class="mu">No products found.</p>';
+}
+
+function adminProducts(){
+ if(!user)return loginPage();
+ if(!isSeller())return'<h2>Restricted Area</h2><p class="mu">Signed in as '+esc(user.email)+', which does not have seller access.</p><button type="button" class="x" data-a="logout">Sign Out</button>';
+ return`<div class="t"><h2>Product Management</h2><a class="ib" href="#/admin">← Back to Orders</a></div>
  <h2>Add New Product</h2>
  <div class="box">
    <input id="pn" placeholder="Product Name">
    <select id="pc">${C.map(c=>`<option>${esc(c.name)}</option>`).join('')}</select>
-   <input id="pp" type="number" min="0" step=".01" placeholder="Price">
+   <input id="pp" type="number" min="0" step=".01" placeholder="Price (${CUR})">
    <input id="pq" type="number" min="0" placeholder="Stock Quantity">
    <input id="pi" type="file" accept="image/*" multiple title="Select one or more images">
    <textarea id="pd" rows="3" placeholder="Product description (fabric, sizing, care instructions, styling notes…)"></textarea>
    <button type="button" data-a="addp">Publish Product</button>
  </div>
- <h2>Categories</h2><div class="box"><input id="cn" placeholder="New Category Name"><button type="button" data-a="addc">Add Category</button><div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div></div>
- <h2>Catalog (${P.length})</h2>${P.map(p=>{const ph=imgs(p);return`<div class="row">
-   <img src="${ph[0]||''}" alt="">
-   <div><b>${esc(p.name)}</b> <span class="mu">(${ph.length} photo${ph.length===1?'':'s'})</span><br><span class="mu">${esc(p.cat)} · ${m(p.price)} · Stock: ${p.qty}</span></div>
-   <button type="button" class="alt" data-a="edit" data-id="${p.id}">Edit</button>
-   <button type="button" class="x" data-a="delp" data-id="${p.id}">Delete</button>
- </div>`}).join('')}`}
+ <h2>Categories</h2>
+ <div class="box">
+   <input id="cn" placeholder="New Category Name">
+   <button type="button" data-a="addc">Add Category</button>
+   <div class="chips">${C.map(c=>`<span class="chip">${esc(c.name)} <b data-a="delc" data-id="${c.id}">×</b></span>`).join('')}</div>
+ </div>
+ <div class="t" style="margin-top:24px">
+   <h2 style="margin:0">Catalog (${P.length})</h2>
+   <div class="srch" style="margin:0"><input id="aq" type="search" placeholder="Filter catalog…" value="${esc(adminS)}"></div>
+ </div>
+ <div id="catlist">${adminCatalogList()}</div>`;
+}
 
 function renderModal(){
  const p=P.find(x=>x.id==editId);
@@ -479,6 +502,7 @@ document.onchange=async e=>{
 };
 document.oninput=e=>{const t=e.target;
  if(t.id=='q'){S=t.value;$('#gr').innerHTML=grid()}
+ else if(t.id=='aq'){adminS=t.value;$('#catlist').innerHTML=adminCatalogList()}
  else if(t.id=='nmi'||t.id=='phi'||t.id=='adi'||t.id=='emi'){info[{nmi:'name',phi:'phone',adi:'address',emi:'email'}[t.id]]=t.value;keep()}};
 
 /* Interactive magnifying zoom on product detail image */
